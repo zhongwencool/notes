@@ -1,1 +1,5 @@
 theme: jekyll-theme-leap-day
+gem "github-pages", group: :jekyll_plugins
+title: 学习记录
+description: Hello World
+show_downloads: false
