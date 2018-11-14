@@ -7,36 +7,35 @@
     <link rel="shortcut icon" href="/assets/images/fav.ico" type="image/x-icon" />
 
 {% seo %}
+
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="{{ site.baseurl | append: '/assets/js/main.js' }}"></script>
-    <!--[if lt IE 9]>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
-    <![endif]-->
+    <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
   <body>
-
-      <header>
-        <h2>{{ page.title }}</h2>
-        <p>{{ page.desc }}</p>
-      </header>
-
     <div class="wrapper">
-      <nav>
-        <ul></ul>
-      </nav>
-      <section>
-        {{ content }}
-      </section>
-      <footer>
-        {% if site.github.is_project_page %}
-          <p><a href="{{ site.github.repository_url }}/blob/master/{{page.path}}">帮助优化此页面</a></p>
-          <p><a href="/">回到首页</a></p>
+      <header {% unless site.description or site.github.project_tagline %} class="without-description" {% endunless %}>
+        <h2>{{ site.title | default: site.github.repository_name }}</h2>
+        {% if site.description or site.github.project_tagline %}
+          <p>{{ site.description | default: site.github.project_tagline }}</p>
         {% endif %}
-      </footer>
+      </header>
+      <section>
+
+      {{ content }}
+
+      </section>
     </div>
+    <footer>
+    {% if site.github.is_project_page %}
+      <p>Made by <a href="{{ site.github.owner_url }}">某文</a></p>
+    {% endif %}
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
 
     {% if site.google_analytics %}
       <script>
@@ -48,12 +47,12 @@
         ga('send', 'pageview');
       </script>
     {% endif %}
-  </body>
-      <script src="https://utteranc.es/client.js"
+    <script src="https://utteranc.es/client.js"
         repo="zhongwencool/notes"
-        issue-term="pathname"
+        issue-number="2"
         theme="github-light"
         crossorigin="anonymous"
         async>
-      </script>
+   </script>
+  </body>
 </html>
