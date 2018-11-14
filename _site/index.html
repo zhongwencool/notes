@@ -1,1 +1,274 @@
-Hello World
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Vagrant必知必会 | 学习笔记</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Vagrant必知必会" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="高山仰止，景行行止。虽不能至，心向往之。" />
+<meta property="og:description" content="高山仰止，景行行止。虽不能至，心向往之。" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="学习笔记" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/","description":"高山仰止，景行行止。虽不能至，心向往之。","name":"学习笔记","@type":"WebSite","headline":"Vagrant必知必会","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=1031147f3ba81a58f71d193a1d92f05a2a22729a">
+    <script src="https://code.jquery.com/jquery-3.3.0.min.js" integrity="sha256-RTQy8VOmNlT6b2PIRur37p6JEBZUE7o8wPgMvu18MC4=" crossorigin="anonymous"></script>
+    <script src="/assets/js/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>学习笔记</h1>
+        <p>高山仰止，景行行止。虽不能至，心向往之。</p>
+      </header>
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h2 id="vagrant必知必会">Vagrant必知必会</h2>
+
+<h3 id="一了解vagrant">一、了解vagrant</h3>
+
+<p>Vagrant 本意是<a href="https://www.dictionary.com/browse/vagrant">无所事事的流浪汉</a>。 但今天出场的<a href="https://www.vagrantup.com">vagrant</a>是指<a href="https://www.hashicorp.com/">HashiCorp</a>开源的快速模拟完整开发环境的工具。旨在极速配置出和生产环境一致的开发环境，提高团队的开发效率。让开发者在本地快速验证新的改动，快速迭代的绝佳助手。</p>
+
+<p>vagrant可以让你用一个简单的命令在一分钟内就完成：</p>
+
+<ul>
+  <li>创建一个你所指定的操作系统(Ubuntu/CentOS/etc…)虚拟机。</li>
+  <li>修改虚拟机的物理属性（比如内存，CPU核数)。</li>
+  <li>配置虚拟机的网络配置，让你的宿主机器/同一网络的其它机器都能访问。</li>
+  <li>配置宿主与虚拟机的同步文件夹。</li>
+  <li>设置虚拟机的hostname。</li>
+  <li>自动配置ssh。</li>
+</ul>
+
+<p>vagrant内部依赖已有成熟的虚拟机技术(VritualBox/VMware/etc)。让vagrant结构简单但功能强大。</p>
+
+<p><img src="https://zhongwencool.github.io/notes/_asset/vagrant_workflow.jpg" alt="vagrant workflow" /></p>
+
+<p>vagrant官网提供主流的操作系统的各种版本镜像(在vagrant中都称为Box)，<a href="https://vagrantcloud.com/boxes/search">可供下载</a>。丰富的box镜像也是vagrant大范围流行的基础。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Developer</th>
+      <th>第一个Release版本</th>
+      <th>开发语言</th>
+      <th>系统要求</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>HashiCorp</td>
+      <td>2010年</td>
+      <td>Ruby</td>
+      <td>Linux/FreeBSD/OS X/Microsoft</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>总之，vagrant操作简单但功能强大，只要一分钟配置，就可以创建出需要的沙箱(sandbox)环境。在正式开始前你需要花几分钟(主要是下载耗时)在官网上下载安装好<a href="https://www.virtualbox.org/wiki/Downloads">virtualbox</a>和<a href="https://www.vagrantup.com/docs/installation/">vagrant</a>。</p>
+
+<h3 id="二基本工作流程">二、基本工作流程</h3>
+
+<p><img src="https://zhongwencool.github.io/notes/_asset/vagrant_command.jpg" alt="vagrant commands" /></p>
+<h4 id="21-项目设置">2.1 项目设置</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir vagrant_paradise
+<span class="nb">cd </span>vagrant_paradise
+vagrant init
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">vagrant init</code> 初始化项目，与<code class="highlighter-rouge">git init</code>类似，会在当前的目录下生成一个<a href="https://www.vagrantup.com/docs/vagrantfile/">Vagrantfile</a>的文件，它有两个作用：</p>
+
+<ul>
+  <li>确定项目的根目录。很多的配置选项都与这个根目录有关。</li>
+  <li>指定虚拟机的具体系统版本，想要预装的软件及如何与这个系统交互(ssh)。</li>
+</ul>
+
+<p>团队间需要保持相同的环境，只需要用版本管理工具(git)管理此文件(不需要加入根目录下的.vagrant文件夹)。</p>
+
+<h4 id="22-boxes">2.2 Boxes</h4>
+
+<p>vagrant官方提供了各种操作系统版本的<a href="https://vagrantcloud.com/boxes/search">镜像文件box</a>。比如安装最新版CentOS的操作系统。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant box add centos/7
+</code></pre></div></div>
+
+<p>默认会从<a href="https://vagrantcloud.com/boxes/search">HashiCorp’s Vagrant Cloud box</a>使用HTTPS下载，你可以在这上面找到各种别人使用的镜像。</p>
+
+<p>当然你也可以指定URL下载自制的box。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant box add centos/7 https://github.com/CommanderK5/packer-centos-template/releases/download/0.7.2/vagrant-centos-7.2.box
+</code></pre></div></div>
+
+<p>boxes下载后是在全局保存的，每个项目都只是clone最基础的镜像，无法改变基础镜像。</p>
+
+<p>下载镜像需要几分钟（时间取决于你的网络状态），完成时可见Vagrantfile中的配置会变成：</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Vagrant</span><span class="p">.</span><span class="nf">configure</span><span class="p">(</span><span class="s2">"2"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  
+  <span class="c1"># Every Vagrant development environment requires a box. You can search for</span>
+  <span class="c1"># boxes at https://vagrantcloud.com/search.</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">vm</span><span class="p">.</span><span class="nf">box</span> <span class="o">=</span> <span class="s2">"centOS/7"</span>
+</code></pre></div></div>
+
+<h4 id="23-启动并ssh进入">2.3 启动并ssh进入</h4>
+
+<p>启动操作系统：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant up
+</code></pre></div></div>
+
+<p>此命令可以在1分钟内启动一个配置centos7系统的虚拟机，vagrant是命令行式的，并没有像直接很virtualbox启动时对应的UI。除了可以使用<code class="highlighter-rouge">vagrant status</code>查看状态外，还可以通过看是否可以ssh来检查虚拟机是否正常。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant ssh
+</code></pre></div></div>
+
+<p>此命令相当于你使用<code class="highlighter-rouge">ssh vagrant@127.0.0.1 -p 2222</code>直接进入到虚拟机中。你可以使用<code class="highlighter-rouge">Ctrl+D</code>退出ssh会话。</p>
+
+<p>todo 高级如何改ssh配置及使用root权限？</p>
+
+<h4 id="24-停止">2.4 停止</h4>
+
+<p>如果你想暂时挂起虚拟机，可以使用</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant halt
+</code></pre></div></div>
+
+<p>vagrant首先会使用guest用户执行<code class="highlighter-rouge">shutdown</code>尝试优雅地关闭虚拟机。如果关闭失败，就会直接关闭虚拟机的电源（<code class="highlighter-rouge">vagrant halt --force</code>直接关闭电源）。</p>
+
+<h4 id="25-销毁">2.5 销毁</h4>
+
+<p>当你想彻底销毁虚拟机时，可以使用</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant destory
+</code></pre></div></div>
+
+<p>它只会删除与除了共享文件夹外的所有资源，他不会释放box（全局的），如果你需要删除box可以使用</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant box remove centos/7
+</code></pre></div></div>
+
+<h3 id="三共享文件夹synced-folds">三、共享文件夹(Synced Folds)</h3>
+
+<p>默认的共享文件夹是宿主的项目根目录与虚拟机的<code class="highlighter-rouge">/home/vagrant/</code>目录，可以看到两个目录下的<em>Vagrantfile</em>是一样的。改动也是可以同步的。这个共享文件夹就是宿主与虚拟机的桥梁。</p>
+
+<h3 id="四初始化脚本provisioning">四、初始化脚本(Provisioning)</h3>
+
+<p>下载的box只是别人封装好的一个基础box，我们需要在基础box根据自个的个性化需求再次初始化。比如需要安装nginx，以前我们会直接通过ssh后使用命令行安装它，导致团队中每个成员都必须按照各种指引自己手动去安装定制软件。vagrant把这些前期准备的工作都统一为provision，可以通过<code class="highlighter-rouge">vagrant up</code>或<code class="highlighter-rouge">vagrant reload —provision</code>时来完成。</p>
+
+<ol>
+  <li>
+    <p>在根目录创建启动脚本<code class="highlighter-rouge">bootstrap.sh</code>。</p>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+yum install <span class="nt">-y</span> nginx
+</code></pre></div>    </div>
+
+    <p><strong>Tips:</strong> 脚本中不允许出现与需要用户输入确认(交互)的行为，所以上面有一个<code class="highlighter-rouge">-y</code>选项。</p>
+  </li>
+  <li>
+    <p>在Vagrantfile文件中指定脚本路径。</p>
+
+    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Vagrant</span><span class="p">.</span><span class="nf">configure</span><span class="p">(</span><span class="s2">"2"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">vm</span><span class="p">.</span><span class="nf">box</span> <span class="o">=</span> <span class="s2">"centos/7"</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">vm</span><span class="p">.</span><span class="nf">provision</span> <span class="ss">:shell</span><span class="p">,</span> <span class="ss">path: </span><span class="s2">"bootstrap.sh"</span>
+<span class="k">end</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>启动虚拟机。</p>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant up
+</code></pre></div>    </div>
+
+    <p>PS: 如果你的虚拟机已是启动状态，可以使用<code class="highlighter-rouge">vagrant reload --provision</code>快速reload。</p>
+  </li>
+  <li>
+    <p>在虚拟机中验证nginx是否可用。</p>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl 127.0.0.1
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="五网络设置network">五、网络设置(Network)</h3>
+
+<p>在上节中我们只是在虚拟机中使用<code class="highlighter-rouge">curl</code>验证，在宿主机器上是不行的，因为我们并没有把虚拟机的80端口映射到宿主机器上。那么我们现在把宿主机器的8080端口转发到虚拟机的80端口，以便能在虚拟机外部访问。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Vagrant</span><span class="p">.</span><span class="nf">configure</span><span class="p">(</span><span class="s2">"2"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">vm</span><span class="p">.</span><span class="nf">box</span> <span class="o">=</span> <span class="s2">"centos/7"</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">vm</span><span class="p">.</span><span class="nf">provision</span> <span class="ss">:shell</span><span class="p">,</span> <span class="ss">path: </span><span class="s2">"bootstrap.sh"</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">vm</span><span class="p">.</span><span class="nf">network</span> <span class="ss">:forwarded_port</span><span class="p">,</span> <span class="ss">guest: </span><span class="mi">80</span><span class="p">,</span> <span class="ss">host: </span><span class="mi">8080</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>此时使用宿主机器的浏览器打开<code class="highlighter-rouge">http://127.0.0.1:8080</code>就可以看到Nginx的欢迎界面。
+PS:如果还是无法访问，需要把你的防火墙关闭(虚拟机的root密码默认为<em>vagrant</em>)。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl stop firewalld
+</code></pre></div></div>
+
+<p><strong>Tips:</strong> 如果需要转发多个端口，可以写多行。</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">config</span><span class="p">.</span><span class="nf">vm</span><span class="p">.</span><span class="nf">network</span> <span class="ss">:forwarded_port</span><span class="p">,</span> <span class="ss">guest: </span><span class="mi">80</span><span class="p">,</span> <span class="ss">host: </span><span class="mi">8080</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">vm</span><span class="p">.</span><span class="nf">network</span> <span class="ss">:forwarded_port</span><span class="p">,</span> <span class="ss">guest: </span><span class="mi">81</span><span class="p">,</span> <span class="ss">host: </span><span class="mi">8081</span>
+</code></pre></div></div>
+
+<p>todo: 高级设置Nat private,public及图示。</p>
+
+<h3 id="六清理teardown">六、清理(Teardown)</h3>
+
+<p>vagrant停止有3种方式(suspend,halt,destroy)，退出时清理的程度一级级加深。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant <span class="nb">suspend</span>
+</code></pre></div></div>
+
+<p>挂起（supending)，会保存当前运行的所有状态，当你再次使用<code class="highlighter-rouge">vagrant up</code>启动时，它会还原到上次挂起时的状态。这样的好处是启动和关闭都非常快(5~10秒)，缺点就是虚拟机会大量占用你的磁盘空间。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant halt
+</code></pre></div></div>
+
+<p>停止(halting)，首先使用guest用户尝试使用<code class="highlighter-rouge">shutdown</code>关闭，如果无法关闭，就直接关闭虚拟机的电源。它的好处是停止释放资源很彻底，不会占额外的硬盘空间(只有虚拟机本身的)，缺点是冷启动会慢一些。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vagrant destroy
+</code></pre></div></div>
+
+<p>销毁(destroying)，它会移除除共享目录外虚拟机所有痕迹。好处是不占任何空间。缺点是当再次<code class="highlighter-rouge">vagrant up</code>，会重新provision。</p>
+
+<h3 id="七高阶">七、高阶</h3>
+
+<h3 id="八最佳实践">八、最佳实践</h3>
+
+<h4 id="todo">TODO</h4>
+
+<p>思维导图</p>
+
+
+      </section>
+      <footer>
+        
+          <p>Project maintained by <a href="http://github.com/zhongwencool">zhongwencool</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+
+    
+  </body>
+</html>
