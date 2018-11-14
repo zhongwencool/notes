@@ -26,12 +26,8 @@ github_username:  jekyll
 
 # Build settings
 markdown: kramdown
-theme: jekyll-theme-leap-day
-gem "github-pages", group: :jekyll_plugins
-title: 学习记录
-description: Hello World
-show_downloads: false
 #theme: minima
+theme: jekyll-theme-leap-day
 plugins:
   - jekyll-feed
 
