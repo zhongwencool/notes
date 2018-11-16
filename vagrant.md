@@ -4,7 +4,7 @@ desc: 10分钟掌握Vagrant
 layout: default
 ---
 
-### 一、vagrant定位
+### 一、Vagrant定位
 
 [Vagrant](https://www.vagrantup.com)是指[HashiCorp](https://www.hashicorp.com/)开源的开箱即用，快速配置开发环境的命令行工具。官宣Sologan: Development Environments Made Easy，旨在一键配置开发环境，是团队成员间同步开发环境的绝佳助手。
 
@@ -17,7 +17,7 @@ Vagrant可以让你用简单的命令行在一分钟内就完成：
 * 设置VM的hostname。
 * 一键配置VM的ssh。
 
-vagrant内部依赖已有成熟的VM技术(VritualBox/VMware/etc)。让vagrant结构简单但功能强大。
+Vagrant内部依赖已有成熟的VM技术(VritualBox/VMware/etc)。让vagrant结构简单但功能强大。
 
 ![vgrant_workflow](https://user-images.githubusercontent.com/3116225/48494500-f9ccee00-e868-11e8-885f-7edd43be1117.jpg)
 vagrant官网提供主流的操作系统的各种版本镜像(在vagrant中都称为Box)，[可供下载](https://vagrantcloud.com/boxes/search)。丰富的box镜像也是vagrant大范围流行的原因之一。
@@ -28,7 +28,7 @@ vagrant官网提供主流的操作系统的各种版本镜像(在vagrant中都�
 
 总之，vagrant操作简单但功能强大，只要一分钟配置，就可以创建出需要的沙箱(sandbox)环境。在正式开始前你需要花几分钟(主要是下载耗时)在官网上下载安装好[virtualbox](https://www.virtualbox.org/wiki/Downloads)和[vagrant](https://www.vagrantup.com/docs/installation/)。
 
-### 二、基本流程(workflow)
+### 二、基本流程(Workflow)
 
 ![vagrant_command](https://user-images.githubusercontent.com/3116225/48494499-f9345780-e868-11e8-963e-8128d91cb6c1.jpg)
 #### 2.1 项目设置
@@ -231,7 +231,7 @@ vagrant destroy
 
 销毁(destroying)，它会移除除共享目录外VM所有痕迹。好处是不占任何空间。缺点是当再次`vagrant up`，会重新进行provision。
 
-### 七、参考资料
+### 七、参考资料(Reference)
 
 * [Vagrant官方网站](https://www.vagrantup.com)。
 * [Vagrantfile所有参数详解](https://www.vagrantup.com/docs/vagrantfile/)。
