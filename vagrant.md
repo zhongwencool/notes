@@ -2,33 +2,37 @@
 title: Vagrant必知必会
 desc: 10分钟掌握Vagrant
 layout: default
+date: 2018-11-17
+category: 工具
 ---
 
 ### 一、Vagrant定位
 
-[Vagrant](https://www.vagrantup.com)是指[HashiCorp](https://www.hashicorp.com/)开源的开箱即用，快速配置开发环境的命令行工具。官宣Sologan: Development Environments Made Easy，旨在一键配置开发环境，是团队成员间同步开发环境的绝佳助手。
+[Vagrant](https://www.vagrantup.com)是指[HashiCorp](https://www.hashicorp.com/)开源的开箱即用，快速配置开发环境的命令行工具。官宣Sologan: Development Environments Made Easy。旨在一键配置开发环境，是团队成员间同步开发环境的绝佳助手。
 
 Vagrant可以让你用简单的命令行在一分钟内就完成：
 
 * 创建一个你所指定的操作系统(Ubuntu/CentOS/etc…)虚拟机（以下简称VM:*virtual machines* ）。
-* 配置VM的物理属性（比如内存，CPU核数)。
+* 配置VM的物理属性（比如*config.vm.provider*中配置内存，CPU核数)。
 * 配置VM的网络配置，让你的宿主机器/同一网络的其它机器都能访问。
 * 配置宿主与VM的同步文件夹。
-* 设置VM的hostname。
-* 一键配置VM的ssh。
+* 设置VM的Hostname。
+* 一键配置VM的SSH。
 
 Vagrant内部依赖已有成熟的VM技术(VritualBox/VMware/etc)。让vagrant结构简单但功能强大。
 
 ![vgrant_workflow](https://user-images.githubusercontent.com/3116225/48494500-f9ccee00-e868-11e8-885f-7edd43be1117.jpg)
-vagrant官网提供主流的操作系统的各种版本镜像(在vagrant中都称为Box)，[可供下载](https://vagrantcloud.com/boxes/search)。丰富的box镜像也是vagrant大范围流行的原因之一。
+HashiCorp官方提供主流的操作系统的各种版本镜像(在vagrant中都称为Box)，[可供下载](https://vagrantcloud.com/boxes/search)。丰富的box镜像也是vagrant大范围流行的原因之一。
 
-| Developer | 第一个Release版本 | 开发语言 | 系统要求                     |
+| 开发人员  | 第一个Release版本 | 开发语言 | 系统要求                     |
 | --------- | ----------------- | -------- | ---------------------------- |
 | HashiCorp | 2010年            | Ruby     | Linux/FreeBSD/OS X/Microsoft |
 
-总之，vagrant操作简单但功能强大，只要一分钟配置，就可以创建出需要的沙箱(sandbox)环境。在正式开始前你需要花几分钟(主要是下载耗时)在官网上下载安装好[virtualbox](https://www.virtualbox.org/wiki/Downloads)和[vagrant](https://www.vagrantup.com/docs/installation/)。
+总之，vagrant操作简单但功能强大，一键就可以创建出所需沙箱(sandbox)环境。在正式开始前，你需要花几分钟(主要是下载耗时)在官网上并下载安装[virtualbox](https://www.virtualbox.org/wiki/Downloads)和[vagrant](https://www.vagrantup.com/docs/installation/)。
 
 ### 二、基本流程(Workflow)
+
+三个状态，常用6个命令。频繁使用的只有2个命令。接下来是一个完整的例子，一步步照着操作，就可以理解Vagrant的大致流程。
 
 ![vagrant_command](https://user-images.githubusercontent.com/3116225/48494499-f9345780-e868-11e8-963e-8128d91cb6c1.jpg)
 #### 2.1 项目设置
@@ -39,12 +43,12 @@ cd vagrant_paradise
 vagrant init
 ```
 
-`vagrant init` 初始化项目，与`git init`类似，会在当前的目录下生成一个[Vagrantfile](https://www.vagrantup.com/docs/vagrantfile/)的文件，它有两个作用：
+`vagrant init` 初始化项目，会在当前的目录下生成一个[Vagrantfile](https://www.vagrantup.com/docs/vagrantfile/)的文件，它有两个作用：
 
 * 确定项目的根目录。很多的配置选项都与这个根目录有关。
 * 指定VM的具体系统版本，想要预装的软件及如何与这个系统交互(ssh)。
 
-团队间需要保持相同的环境，只需要用版本管理工具(git)管理此文件(不需要加入根目录下的.vagrant文件夹)。
+团队间需要保持相同环境，只需要用版本管理工具管理此文件(不需要加入根目录下的.vagrant文件夹)。
 
 #### 2.2 Boxes
 
@@ -62,9 +66,9 @@ vagrant box add centos/7
 vagrant box add centos/7 https://github.com/CommanderK5/packer-centos-template/releases/download/0.7.2/vagrant-centos-7.2.box
 ```
 
-boxes下载后是在全局保存的，每个项目都只是clone下载的基础镜像，无法改变此基础镜像。
+boxes下载后是在全局保存`~/.vagrant.d/`，每个项目只是clone此基础镜像，无法改变它。
 
-下载镜像需要几分钟（时间取决于你的网络状态），完成时可见Vagrantfile中的配置会变成：
+下载镜像需要几分钟（时间取决于你的网络状态），完成时可见*Vagrantfile*中的配置会变成：
 
 ```ruby
 Vagrant.configure("2") do |config|
@@ -74,7 +78,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "centOS/7"
 ```
 
-#### 2.3 启动并ssh进入
+#### 2.3 启动并SSH进入
 
 启动操作系统：
 
@@ -82,7 +86,7 @@ Vagrant.configure("2") do |config|
 vagrant up
 ```
 
-此命令可以在1分钟内启动一个配置centos7系统的VM，vagrant是命令行式的，并没有像直接很virtualbox启动时对应的UI。除了可以使用`vagrant status`查看状态外，还可以通过看是否可以ssh来检查VM是否正常。
+此命令可以在1分钟内启动一个配置centos7系统的VM，vagrant是默认是命令行式的，并没有像直接很virtualbox启动时对应的UI。除了可以使用`vagrant status`查看状态外，还可以通过看是否可以ssh来检查VM是否正常。
 
 ```shell
 vagrant ssh
@@ -126,11 +130,11 @@ vagrant box remove centos/7
 
 ### 三、同步文件夹(Synced Folds)
 
-默认的同步文件夹是宿主的项目根目录(*Vagrantfile*所在目录)与VM的`/vagrant/`目录，可以看到两个目录下的*Vagrantfile*是同一个文件。这个共享文件夹就是宿主与VM的桥梁，一般把代码都放在这个共享文件夹下。
+默认的同步文件夹是宿主的项目根目录(*Vagrantfile*所在目录)与VM的`/vagrant/`目录，可以看到两个目录下的*Vagrantfile*是同步的。这个同步的文件夹就是宿主与VM的桥梁，一般把代码都放在这个共享文件夹下。
 
-👉如何修改/更新/禁止这个共享文件夹？
+🙇‍♂️如何修改/更新/禁止此同步文件夹？
 
-直接修改Vagrantfile中的*config.vm.synced_folder*，然后执行`vagrant reload`。
+直接修改*Vagrantfile*中的*config.vm.synced_folder*，然后执行`vagrant reload`。
 
 ```ruby
 Vagrant.configure("2") do |config|
@@ -139,15 +143,16 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-第一个参数为宿主机器的目录，如果使用相对路径，相对的是项目的根目录。第二个参数是VM中的路径，必须是绝对路径，如果不存在，就会递归创建。共享文件夹默认的*owner/group*权限是和ssh的用户一致，此文件夹的父件夹*owner/group*被设置root。
+* 第一个参数为宿主机器的目录，如果使用相对路径，相对的是项目的根目录。
+* 第二个参数是VM中的路径，必须是绝对路径，如果不存在，就会递归创建。共享文件夹默认的*owner/group*权限是和ssh的用户一致，此文件夹的父文件夹*owner/group*被设置root。
 
-如果你想改变上面的默认权限或禁止使用共享文件夹，[点击查看官方文档](https://www.vagrantup.com/docs/synced-folders/basic_usage.html#options)。
+如果你想改变上面的默认权限或禁止使用共享文件夹，[👉查看官方文档](https://www.vagrantup.com/docs/synced-folders/basic_usage.html#options)。
 
 💡: 最好不要把共享文件夹指定为符号链接。大多数情况下可以工作，少数情况下会莫名出错。
 
 ### 四、初始化脚本(Provisioning)
 
-下载的box只是别人打包完成的基础镜像，我们需要在基础镜像上根据个性化需求再次初始化。比如需要安装nginx，以前我们会直接通过ssh后使用命令行安装它，不便的是团队中每个成员都必须按照各种指引自己手动去安装定制软件。vagrant把这些前期准备的步骤统称为provision，可以通过`vagrant up`或`vagrant reload —provision`时来完成。
+下载的box只是别人打包过后的基础镜像，我们需要在基础镜像上根据个性化需求再次初始化。比如需要安装Nginx，以前我们会直接通过ssh后使用命令行安装它，不便的是团队中每个成员都必须按照各种指引自己手动去安装定制软件。vagrant把这些前期准备的步骤统称为provision，可以通过`vagrant up`或`vagrant reload —provision`时来完成。
 
 1. 在根目录创建启动脚本`bootstrap.sh`。																	
 
@@ -158,7 +163,7 @@ end
 
    💡: 脚本中不允许出现与需要用户输入确认(交互)的行为，所以`yum`加了一个`-y`选项。
 
-2. 在Vagrantfile文件中指定脚本路径。
+2. 在*Vagrantfile*文件中指定脚本路径。
 
    ```ruby
    Vagrant.configure("2") do |config|
@@ -183,7 +188,7 @@ end
 
 ### 五、网络设置(Network)
 
-在上节中我们只是在VM中使用`curl`验证，在宿主机器上是不行的，因为我们并没有把VM的80端口映射到宿主机器上。那么我们现在把宿主机器的8080端口转发到VM的80端口，以便能在VM外部访问。
+在上节中只是在VM中使用`curl`验证，在宿主机器上是不行的，因为我们并没有把VM的80端口映射到宿主机器上。那么我们现在把宿主机器的8080端口转发到VM的80端口，以便能在VM外部访问。
 
 ```ruby
 Vagrant.configure("2") do |config|
@@ -211,7 +216,7 @@ config.vm.network :forwarded_port, guest: 81, host: 8081
 
 ### 六、清理(Teardown)
 
-vagrant停止有3种方式(suspend,halt,destroy)，退出时清理的程度一级级加深。
+vagrant停止有3种方式(suspend,halt,destroy)，退出时清理的程度级级加深。
 
 ``` shell
 vagrant suspend
