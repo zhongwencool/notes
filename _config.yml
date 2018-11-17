@@ -18,7 +18,7 @@ email: 738819904@qq.com
 description: >- # this means to ignore newlines until "baseurl:"
   高山仰止，景行行止。虽不能至，然心向往之。
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https:/notes.tried.cc" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://notes.tried.cc" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: erl_learn
 github_username:  zhongwencool
 google_analytics: UA-129364320-1
@@ -28,8 +28,10 @@ google_analytics: UA-129364320-1
 markdown: kramdown
 #theme: minima
 theme: jekyll-theme-leap-day
+safe: false
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
