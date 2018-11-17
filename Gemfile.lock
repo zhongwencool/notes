@@ -245,6 +245,7 @@ DEPENDENCIES
   github-pages
   jekyll (~> 3.7.3)
   jekyll-feed (~> 0.6)
+  jekyll-sitemap (~> 1.2)
   jekyll-theme-leap-day (~> 0.1)
   minima (~> 2.0)
   tzinfo-data

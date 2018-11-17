@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
     <link rel="icon" href="/assets/images/fav.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="/assets/images/fav.ico" type="image/x-icon" />
 
-{% seo %}
+    {% seo %}
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="{{ site.baseurl | append: '/assets/js/main.js' }}"></script>
@@ -20,7 +21,7 @@
 
       <header>
         <h2>{{ page.title }}</h2>
-        <p>{{ page.desc }}</p>       
+        <p>{{ page.subtitle }}</p>       
       </header>
 
     <div class="wrapper">

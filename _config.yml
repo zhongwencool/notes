@@ -13,15 +13,43 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
+# 用于SEO
+
 title: 札记
+subtitle: >- # this means to ignore newlines until "baseurl:"
+  高山仰止，景行行止。虽不能至，然心向往之。
 email: 738819904@qq.com
 description: >- # this means to ignore newlines until "baseurl:"
-  高山仰止，景行行止。虽不能至，然心向往之。
+     Notes
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://notes.tried.cc" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: erl_learn
+
 github_username:  zhongwencool
+
+# 用于SEO
+twitter:
+  username: erl_learn
+  card: summary
+
+social:
+  name: 邓忠文
+  links:
+    - https://twitter.com/erl_learn
+    - https://weibo.com/zhongwencool
+    - https://github.com/zhongwencool
+    - https://www.douban.com/people/zhognwencool
+
+google_site_verification: UA-jdwawmK2viL1Do3m87FvVrXYHhvhxV8LgSIHRrn8_vY
+
+lang: "zh-Hans"
+
+author:
+  twitter: erl_learn
+
 google_analytics: UA-129364320-1
+
+
+excerpt_separator: <!--more-->
 
 
 # Build settings
@@ -32,6 +60,7 @@ safe: false
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-seo-tag
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

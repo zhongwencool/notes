@@ -1,6 +1,7 @@
 ---
 title: Vagrant必知必会
-desc: 10分钟掌握Vagrant
+subtitle: 10分钟Vagrant入门
+description: 零基础vagrant入门,vagrant必知必会,vagrant例子,vagrant基础知识
 layout: default
 date: 2018-11-15
 category: 工具

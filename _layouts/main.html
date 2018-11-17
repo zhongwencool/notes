@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
     <link rel="icon" href="/assets/images/fav.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="/assets/images/fav.ico" type="image/x-icon" />
-    <meta name="google-site-verification" content="jdwawmK2viL1Do3m87FvVrXYHhvhxV8LgSIHRrn8_vY" />
 
-{% seo %}
+    {% seo %}
 
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
@@ -21,8 +21,8 @@
     <div class="wrapper">
       <header {% unless site.description or site.github.project_tagline %} class="without-description" {% endunless %}>
         <h2>{{ site.title | default: site.github.repository_name }}</h2>
-        {% if site.description or site.github.project_tagline %}
-          <p>{{ site.description | default: site.github.project_tagline }}</p>
+        {% if site.subtitle or site.github.project_tagline %}
+          <p>{{ site.subtitle | default: site.github.project_tagline }}</p>
         {% endif %}
       </header>
       <section>
