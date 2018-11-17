@@ -2,13 +2,13 @@
 title: Vagrant必知必会
 desc: 10分钟掌握Vagrant
 layout: default
-date: 2018-11-17
+date: 2018-11-15
 category: 工具
 ---
 
-### 一、Vagrant定位
+### 一、初识Vagrant
 
-[Vagrant](https://www.vagrantup.com)是指[HashiCorp](https://www.hashicorp.com/)开源的开箱即用，快速配置开发环境的命令行工具。官宣Sologan: Development Environments Made Easy。旨在一键配置开发环境，是团队成员间同步开发环境的绝佳助手。
+[Vagrant](https://www.vagrantup.com)是指[HashiCorp](https://www.hashicorp.com/)开源的开箱即用，快速配置开发环境的命令行工具。官宣Sologan: Development Environments Made Easy。旨在一键配置开发环境，是团队成员间同步开发环境的绝佳助手，比如：前端开发可以凭着与服务端共享的*Vagrantfile*一键在本地配置出后端所有的服务，后续同步版本也非常方便，前端不需要关心/掌握服务端的任何知识。
 
 Vagrant可以让你用简单的命令行在一分钟内就完成：
 
@@ -22,17 +22,17 @@ Vagrant可以让你用简单的命令行在一分钟内就完成：
 Vagrant内部依赖已有成熟的VM技术(VritualBox/VMware/etc)。让vagrant结构简单但功能强大。
 
 ![vgrant_workflow](https://user-images.githubusercontent.com/3116225/48494500-f9ccee00-e868-11e8-885f-7edd43be1117.jpg)
-HashiCorp官方提供主流的操作系统的各种版本镜像(在vagrant中都称为Box)，[可供下载](https://vagrantcloud.com/boxes/search)。丰富的box镜像也是vagrant大范围流行的原因之一。
+HashiCorp官方提供主流的操作系统的各种版本镜像(在vagrant中都称为Box)，[可供下载](https://vagrantcloud.com/boxes/search)。丰富的boxes镜像也是Vagrant近几年迅速在各大公司内风靡的原因之一。
 
 | 开发人员  | 第一个Release版本 | 开发语言 | 系统要求                     |
 | --------- | ----------------- | -------- | ---------------------------- |
 | HashiCorp | 2010年            | Ruby     | Linux/FreeBSD/OS X/Microsoft |
 
-总之，vagrant操作简单但功能强大，一键就可以创建出所需沙箱(sandbox)环境。在正式开始前，你需要花几分钟(主要是下载耗时)在官网上并下载安装[virtualbox](https://www.virtualbox.org/wiki/Downloads)和[vagrant](https://www.vagrantup.com/docs/installation/)。
+总之，Vagrant操作简单但功能强大，一键就可以创建出所需沙箱(sandbox)环境。在正式开始前，你需要花几分钟(主要是下载耗时)在官网上并下载安装[virtualbox](https://www.virtualbox.org/wiki/Downloads)和[vagrant](https://www.vagrantup.com/docs/installation/)。
 
-### 二、基本流程(Workflow)
+### 二、基本流程(BasicFlow)
 
-三个状态，常用6个命令。频繁使用的只有2个命令。接下来是一个完整的例子，一步步照着操作，就可以理解Vagrant的大致流程。
+Vagrant为了维护VM的三个状态（初始化，运行中，停止），使用的关键命令有6个命令。频繁使用的只有2个命令。接下来是一个从零构建Nginx HTTP服务的完整例子，一步步照着操作，就可以理解Vagrant的基本流程。
 
 ![vagrant_command](https://user-images.githubusercontent.com/3116225/48494499-f9345780-e868-11e8-963e-8128d91cb6c1.jpg)
 #### 2.1 项目设置
@@ -43,12 +43,12 @@ cd vagrant_paradise
 vagrant init
 ```
 
-`vagrant init` 初始化项目，会在当前的目录下生成一个[Vagrantfile](https://www.vagrantup.com/docs/vagrantfile/)的文件，它有两个作用：
+`vagrant init` 初始化项目，会在当前的目录下生成一个[Vagrantfile](https://www.vagrantup.com/docs/vagrantfile/)的文件，它关键的两个作用：
 
 * 确定项目的根目录。很多的配置选项都与这个根目录有关。
-* 指定VM的具体系统版本，想要预装的软件及如何与这个系统交互(ssh)。
+* 指定VM的具体系统版本，想要预装的软件及如何与这个系统交互(SSH)。
 
-团队间需要保持相同环境，只需要用版本管理工具管理此文件(不需要加入根目录下的.vagrant文件夹)。
+团队间需要保持相同环境，只需要用版本管理工具同步此文件(不需要加入根目录下的.vagrant文件夹)。
 
 #### 2.2 Boxes
 
@@ -86,7 +86,9 @@ Vagrant.configure("2") do |config|
 vagrant up
 ```
 
-此命令可以在1分钟内启动一个配置centos7系统的VM，vagrant是默认是命令行式的，并没有像直接很virtualbox启动时对应的UI。除了可以使用`vagrant status`查看状态外，还可以通过看是否可以ssh来检查VM是否正常。
+此命令可以在1分钟内启动一个配置centos7系统的VM，vagrant默认是命令行式的，并没有像直接很virtualbox启动时对应的UI。正常启动后网络和SSH都是已设置好的状态。
+
+除了可以使用`vagrant status`查看状态外，还可以通过看是否可以ssh来检查VM启动是否正常。
 
 ```shell
 vagrant ssh
@@ -106,7 +108,7 @@ Vagrant.configure("2") do |config|
 
 #### 2.4 停止
 
-如果你想暂时挂起VM，可以使用
+你可以通过`halt`停止VM：
 
 ```shell
 vagrant halt
@@ -116,7 +118,7 @@ vagrant首先会使用guest用户执行`shutdown`尝试优雅地关闭VM。如�
 
 #### 2.5 销毁
 
-当你想彻底销毁VM时，可以使用
+你可以通过`destory`彻底销毁VM：
 
 ```shell
 vagrant destory
@@ -128,9 +130,9 @@ vagrant destory
 vagrant box remove centos/7
 ```
 
-### 三、同步文件夹(Synced Folds)
+### 三、同步文件夹(SyncedFolds)
 
-默认的同步文件夹是宿主的项目根目录(*Vagrantfile*所在目录)与VM的`/vagrant/`目录，可以看到两个目录下的*Vagrantfile*是同步的。这个同步的文件夹就是宿主与VM的桥梁，一般把代码都放在这个共享文件夹下。
+默认的同步文件夹是宿主的项目根目录(*Vagrantfile*所在目录)与VM的`/vagrant/`目录，可以看到两个目录下的*Vagrantfile*是同步的。这个同步的文件夹就是宿主与VM的桥梁，当VM IO负担很重时，同步大量文件夹会对IO影响很大，所以一般只把代码都放在此文件夹中，那些频繁改动的大文件（数据库运行产生的文件）直接放在VM内部。
 
 🙇‍♂️如何修改/更新/禁止此同步文件夹？
 
@@ -146,13 +148,13 @@ end
 * 第一个参数为宿主机器的目录，如果使用相对路径，相对的是项目的根目录。
 * 第二个参数是VM中的路径，必须是绝对路径，如果不存在，就会递归创建。共享文件夹默认的*owner/group*权限是和ssh的用户一致，此文件夹的父文件夹*owner/group*被设置root。
 
-如果你想改变上面的默认权限或禁止使用共享文件夹，[👉查看官方文档](https://www.vagrantup.com/docs/synced-folders/basic_usage.html#options)。
+如果你想修改上面的默认权限或禁止使用共享文件夹，[👉查看官方文档](https://www.vagrantup.com/docs/synced-folders/basic_usage.html#options)。
 
 💡: 最好不要把共享文件夹指定为符号链接。大多数情况下可以工作，少数情况下会莫名出错。
 
 ### 四、初始化脚本(Provisioning)
 
-下载的box只是别人打包过后的基础镜像，我们需要在基础镜像上根据个性化需求再次初始化。比如需要安装Nginx，以前我们会直接通过ssh后使用命令行安装它，不便的是团队中每个成员都必须按照各种指引自己手动去安装定制软件。vagrant把这些前期准备的步骤统称为provision，可以通过`vagrant up`或`vagrant reload —provision`时来完成。
+使用`vagrant box add`下载的box只是别人打包过后的基础镜像，我们需要在基础镜像上根据个性化需求再次初始化。比如需要安装Nginx，以前我们会直接通过ssh后使用命令行安装它，不便之处是团队中每个成员都必须按照各种指引手动去安装软件。vagrant把这些前期准备步骤称为provision，可以通过`vagrant provision`或`vagrant reload —provision`时来完成。
 
 1. 在根目录创建启动脚本`bootstrap.sh`。																	
 
@@ -175,10 +177,10 @@ end
 3. 执行provision。
 
    ``` shell
-   vagrant up
+   vagrant provision
    ```
 
-   💡: 如果你的VM已是启动状态，可以使用`vagrant reload --provision`或`vagrant provision`，provision并不会每次`vagrant up`都执行，执行的时机是provision从来没有执行过，或你明确告诉它。
+   💡: `vagrant up`并不会每次都执行provision，执行的时机是provision从来没有执行过，或你明确告诉它。
 
 4. 在VM中验证nginx是否可用。
 
@@ -212,33 +214,33 @@ config.vm.network :forwarded_port, guest: 80, host: 8080
 config.vm.network :forwarded_port, guest: 81, host: 8081
 ```
 
-网络设置中`config.vm.network`默认为*public_network*，如果你需要设置为*private_network*或想搞清楚这两者的具体区别，可以[查看这些高级设置](https://www.vagrantup.com/docs/networking/private_network.html)。
+网络设置中`config.vm.network`默认为*public_network*，如果你需要设置为*private_network*或想搞清楚这两者的具体区别，可以[👉这些高级设置](https://www.vagrantup.com/docs/networking/private_network.html)。
 
 ### 六、清理(Teardown)
 
-vagrant停止有3种方式(suspend,halt,destroy)，退出时清理的程度级级加深。
+Vagrant停止有3种方式(suspend,halt,destroy)，退出时清理的程度级级加深。
 
 ``` shell
 vagrant suspend
 ```
 
-挂起（supending)，会保存当前运行的所有状态，当你再次使用`vagrant up`启动时，它会还原到上次挂起时的状态。这样的好处是启动和关闭都非常快(5~10秒)，缺点就是VM会大量占用你的磁盘空间。
+挂起（supending)，会保存当前运行的所有状态的快照（snapshot），当你再次使用`vagrant up`启动时，它会还原到上次挂起时的状态。这样的好处是启动和关闭都非常快(5~10秒)，缺点就是VM会大量占用你的磁盘空间。
 
 ```shell
 vagrant halt
 ```
 
-停止(halting)，首先使用guest用户尝试使用`shutdown`关闭，如果无法关闭，就直接关闭VM的电源。它的好处是停止释放资源很彻底，不会占额外的硬盘空间(只有VM本身的)，缺点是这种冷启动会比suspend慢。
+停止(halting)，首先使用guest用户尝试使用`shutdown`关闭，如果无法关闭，就直接关闭VM的电源。它的好处是不在硬盘上保存当前内存信息，占用空间较小，缺点是这种冷启动方式会比suspend慢，并且VM冷启动成功后需手动再启动你的服务。
 
 ```shell
 vagrant destroy
 ```
 
-销毁(destroying)，它会移除除共享目录外VM所有痕迹。好处是不占任何空间。缺点是当再次`vagrant up`，会重新进行provision。
+销毁(destroying)，它会移除除同步目录外VM其它痕迹。好处是停止不占硬盘空间。缺点是当再次`vagrant up`，会重新进行provision。
 
 ### 七、参考资料(Reference)
 
 * [Vagrant官方网站](https://www.vagrantup.com)。
-* [Vagrantfile所有参数详解](https://www.vagrantup.com/docs/vagrantfile/)。
-* [Vagrant Boxes官方查询](https://atlas.hashicorp.com/boxes/search)。
-* [Vagrant Boxes非官方查询](http://www.vagrantbox.es/)。
+* [Vagrantfile所有配置参数详解](https://www.vagrantup.com/docs/vagrantfile/)。
+* [Vagrant Boxes官方搜索](https://atlas.hashicorp.com/boxes/search)。
+* [Vagrant Boxes非官方搜索](http://www.vagrantbox.es/)。
