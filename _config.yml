@@ -21,6 +21,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https:/notes.tried.cc" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: erl_learn
 github_username:  zhongwencool
+google_analytics: UA-129364320-1
 
 
 # Build settings
