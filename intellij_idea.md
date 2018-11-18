@@ -5,13 +5,14 @@ description: Intellij IDEA进阶,IDEA快捷键指南,重构,复制粘贴剪切,�
 date: 2018-10-20
 layout: default
 category: 工具
+
 ---
 
 ### 1. 快捷键至关重要
 
 让一件事执行起来毫不费力，简单实用的方法就是减少执行的阻碍物。就像地面越是光滑，相同作用力物体的滑行速度越快，距离也更远。设置合理的快捷键可以有效减少写代码的拌脚石。
 
-从2013年底开始尝试从Emacs转到IDEA，觉得它插件丰富，社区的大佬也有很多人推荐。2年前偶然看到[42 IntelliJ IDEA Tips and Tricks（油管视频）](https://www.youtube.com/watch?v=eq3KiAH4IBI)后震惊自己把一把利剑只是当菜刀使，也不关心如何提高效率。本文的核心是**如何设置合理的快捷键来把IDEA榨干**，摸索出属于自己的工作流。
+从2013年底开始尝试从Emacs转到IDEA，觉得它插件丰富，社区里的很多大佬也极力推荐。2年前偶然看到[42 IntelliJ IDEA Tips and Tricks（油管视频）](https://www.youtube.com/watch?v=eq3KiAH4IBI)后震惊自己把一把利剑只是当菜刀使，也不关心如何提高效率。本文的核心是**如何设置合理的快捷键来把IDEA榨干**，摸索出属于自己的工作流。
 
 💡: **设置合理快捷键**的重要性就和五笔字根表对于五笔选手一样，选择和改造一套符合自己的字根表（借鉴前人的同时加入自己的习惯），然后牢记它的口诀，熟练后，即便彻底忘记口诀，你也能达到行云流水的状态。
 
@@ -177,6 +178,11 @@ Replace不用Ctrl的原因，因为被下现的Refactor占用了。Replace对我
 4. 一直使用命令行的Debug与版本管理git，所以我没有在Idea中设置它们。
 
 以上说的这些快捷键，把26个字母都用上了。如果按字母来统一的话，可以为：
+
+![idea_shortcut_category](./assets/images/idea_shortcut_category.jpg)
+
+![idea_shortcut_index](./assets/images/idea_shortcut_index.jpg)
+
 
 
 找到合适自己的快捷键最有效的方法是亲手**实践看效果**，而不只是简单的看演示得到的体会。
