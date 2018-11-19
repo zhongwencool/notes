@@ -1,7 +1,7 @@
 ---
 title: Vagrant必知必会
 subtitle: 10分钟Vagrant入门
-description: 零基础vagrant入门,vagrant必知必会,vagrant例子,vagrant基础知识
+description: 零基础vagrant入门,vagrant中文教程,vagrant例子,vagrant基础知识
 layout: default
 date: 2018-11-15
 category: 工具
@@ -88,7 +88,10 @@ vagrant up
 ```
 
 此命令可以在1分钟内启动一个配置centos7系统的VM，vagrant默认是命令行式的，并没有像直接很virtualbox启动时对应的UI。正常启动后网络和SSH都是已设置好的状态。
-如果是宿主是windows系统，可能会出现卡在
+
+💡: 如何判断VM正常启动呢？
+
+此命令返回提示和`vagrant status`可以判断出是否卡在了致命的错误上，但是最终是否正常应该看VM能不能正常被SSH进入。如果不能，最直接的方法就是：打开virtualbox运行界面，使用它直接启动镜像，这样就能看到系统提示有什么。比如：我在宿主机器是windows10中就卡在配置ssh上。
 
 ```shell
 default: SSH address: 127.0.0.1:2222
@@ -96,15 +99,15 @@ default: SSH username: vagrant
 default: SSH auth method: private key
 ```
 
-一直进入不了，这一定是你的虚拟机根本没有起来。最简单的方法是打开virtualbox的运行界面UI，使用界面直接进入虚拟机，看报什么错。极有可能的是虚拟机根本启动不了，我遇到的是：
+然后用virtualbox启动时发现报错：
 
 ```shell
 this kernel requires an x86-64 cpu but only detected an i686 cpu
 ```
 
-明明是64位机器，结果却只能使用32位的配置，所以直接打开vritualbox界面右键设置，在常规/基本中Linux中根本没有64位选择。只有32位的。这是windows默认的BIOS的virtualization默认为disabled。需要重启windows然后启动时不断按F10进入BIOS界面，在advanced选项中把VT-x virtualization enabled（前提Virtualization Extension"插件已安装)。
+明明是64位机器，结果却只能使用32位的配置，所以直接打开vritualbox界面右键设置，在常规/基本中Linux中吸有32位机型选择，没有32位。这是我机器上默认的BIOS的*virtualization*默认为disabled。需要重启windows然后启动时进入BIOS界面(不断按F10)，*Advanced / VT-x virtualization*设置为enabled（前提：Virtualization Extension插件已安装)。
 
-除了可以使用`vagrant status`查看状态外，还可以通过看是否可以ssh来检查VM启动是否正常。
+修复后，通过看是否可以ssh来检查VM启动是否正常。
 
 ```shell
 vagrant ssh
