@@ -23,7 +23,7 @@ Vagrant可以让你用简单的命令行在一分钟内就完成：
 Vagrant内部依赖已有成熟的VM技术(VritualBox/VMware/etc)。让vagrant结构简单但功能强大。
 
 ![vgrant_workflow](https://user-images.githubusercontent.com/3116225/48494500-f9ccee00-e868-11e8-885f-7edd43be1117.jpg)
-HashiCorp官方提供主流的操作系统的各种版本镜像(在vagrant中都称为Box)，[可供下载](https://vagrantcloud.com/boxes/search)。丰富的boxes镜像也是Vagrant近几年迅速在各大公司内风靡的原因之一。
+HashiCorp官方提供主流的操作系统的各种版本镜像(在vagrant中都称为Box)，[可供下载](https://app.vagrantup.com/boxes/search)。丰富的boxes镜像也是Vagrant近几年迅速在各大公司内风靡的原因之一。
 
 | 开发人员  | 第一个Release版本 | 开发语言 | 系统要求                     |
 | --------- | ----------------- | -------- | ---------------------------- |
@@ -243,5 +243,5 @@ vagrant destroy
 
 * [Vagrant官方网站](https://www.vagrantup.com)。
 * [Vagrantfile所有配置参数详解](https://www.vagrantup.com/docs/vagrantfile/)。
-* [Vagrant Boxes官方搜索](https://atlas.hashicorp.com/boxes/search)。
+* [Vagrant Boxes官方搜索](https://app.vagrantup.com/boxes/search)。
 * [Vagrant Boxes非官方搜索](http://www.vagrantbox.es/)。
