@@ -115,7 +115,7 @@ vagrant ssh
 
 此命令相当于你使用`ssh vagrant@127.0.0.1 -p 2222`直接进入到VM中。你可以使用`Ctrl+D`退出ssh会话。
 
-你可以使用`vagrant ssh-config`查看当前的ssh配置情况。默认使用的用户是vagrant用户，如果你想使用root(当然不推荐这么干)，也是可以的。
+你可以使用`vagrant ssh-config`查看当前的ssh配置情况。默认使用的用户是vagrant用户，如果需要改成root用户配置如下：
 
 ```ruby
 Vagrant.configure("2") do |config|  
@@ -123,7 +123,7 @@ Vagrant.configure("2") do |config|
   config.ssh.private_key_path="/xyz/.vagrant/machines/default/virtualbox/private_key" 
 ```
 
-其它高级选项可见[文档](https://www.vagrantup.com/docs/vagrantfile/ssh_settings.html)。
+最好使用openssl重新生成RSA Key，默认的是不安全的。其它高级选项可见[文档](https://www.vagrantup.com/docs/vagrantfile/ssh_settings.html)。
 
 #### 2.4 停止
 
