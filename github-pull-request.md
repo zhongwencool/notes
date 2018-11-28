@@ -168,7 +168,7 @@ PR提交后，维护者会对它进行逐行的审查(review)，大家可以共�
 5. 通过PR的方式把你fork项目中的变更提交到我的项目中，完成PR!
 
    我看到PR后会合并，合并后马上就能在文章中看到你的名字啦~
-
+   ![PullRequest](https://user-images.githubusercontent.com/3116225/49165617-8fd63d80-f36c-11e8-8c3c-e3b2b394e2a3.png)
 
 
    另外如果你发现了本文还有其它可以改良的地方，欢迎帮忙  👏👏 👏👏 👏。
@@ -183,5 +183,6 @@ TodoTodo
 
 * [理解GitHub的工作流](https://guides.github.com/introduction/flow/index.html)。
 
-#### 纸上得来终觉浅，绝知此事要躬行。
+**纸上得来终觉浅，绝知此事要躬行。**
 
+[某文](https://github.com/zhongwencool)、
