@@ -1,5 +1,5 @@
 ---
-title: Github Pull Request入门
+title: GitHub Pull Request入门
 subtitle: 5分钟完成自己的第一个Pull Request
 description: Pull Request实例,Pull Request例子,Pull Request入门,PR例子,PR流程,PR指南,PR手册
 date: 2018-11-28
@@ -9,7 +9,7 @@ category: 工具
 
 [人的成就感来源于两样东西，创造与毁灭](https://www.zhihu.com/question/20029839/answer/13732329)。没有什么比为你感兴趣的项目贡献代码，通过一个伟大的PR展示自己炉火纯青的编码功力，更让人着迷。本文将详细介绍创建Pull Request时应该要掌握的知识。
 
-在本文的[实战环节](#practice)，会一步步指引你提交PR把自己的名字署在文末，快来完成自己的第一个PR吧~
+文未的[实战环节](#practice)，会一步步指引你提交PR把自己的名字署在文末，快来完成自己的第一个PR吧~
 
 ### 如何挑选项目(Finding)
 
@@ -136,13 +136,13 @@ PR提交后，维护者会对它进行逐行的审查(review)，大家可以共�
 
 **目标：** 通过提交Pull Request的方式把你的名字署在文末。
 
-1. 首先Fork本项目，把这个项目变成你自己GitHub下的项目。如果你没有设置好Git，可以[参照GitHub指引](https://help.github.com/articles/set-up-git/)。
+1. 首先Fork[本项目](https://github.com/zhongwencool/notes)，把它变成你自己GitHub下的项目。如果你没有设置好Git，可[参照GitHub指引](https://help.github.com/articles/set-up-git/)。
 
    ![fork](https://user-images.githubusercontent.com/3116225/49161572-189cab80-f364-11e8-9246-bd8465f5716f.png)
 
 
 
-2. 你就可以在自己的GitHub账户下已fork了notes这个项目。将项目clone到本地后创建自己的分支。
+2. 成功后可在自己GitHub账户下看到notes项目。将项目用命令行clone到本地后创建新分支。
 
    ```shell
    git clone https://github.com/你自己GitHub用户名/notes.git
@@ -167,17 +167,76 @@ PR提交后，维护者会对它进行逐行的审查(review)，大家可以共�
 
 5. 通过PR的方式把你fork项目中的变更提交到我的项目中，完成PR!
 
-   我看到PR后会合并，合并后马上就能在文章中看到你的名字啦~
+   被合并后马上就能在文章中看到你的名字啦~
    ![PullRequest](https://user-images.githubusercontent.com/3116225/49165617-8fd63d80-f36c-11e8-8c3c-e3b2b394e2a3.png)
 
 
    另外如果你发现了本文还有其它可以改良的地方，欢迎帮忙  👏👏 👏👏 👏。
 
-### 进阶篇(Advanced)
+### 同步上游分支(Upstream)
 
-🙇‍♂️：如何保持fork的分支与远程分支同步？
+🙇‍♂️：如何保持fork分支与上游分支(upstream)同步？
 
-TodoTodo
+1. 先查看一下你目前git状态。
+
+   ```shell
+   $ git remote -v
+   origin  https://github.com/YOUR_USERNAME/YOUR_FORK.git (fetch)
+   origin  https://github.com/YOUR_USERNAME/YOUR_FORK.git (push)
+   ```
+
+   以上说明: 你的origin分支指向的是你fork的分支。
+
+2. 指定上游地址。
+
+   ```shell
+   $ git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git
+   ```
+
+   upstream分支指向上游地址，这里的**upstream**名字可以任意指定，只是一般都把上游地址都叫**upstream**。
+
+3. 检查地址是否设置成功。
+
+   ```shell
+   $ git remote -v
+   origin    https://github.com/YOUR_USERNAME/YOUR_FORK.git (fetch)
+   origin    https://github.com/YOUR_USERNAME/YOUR_FORK.git (push)
+   upstream  https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git (fetch)
+   upstream  https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git (push)
+   ```
+
+4. 从upstream分支上拉取最新代码。
+
+   ```shell
+   $ git fetch upstream
+   remote: Counting objects: 75, done.
+   remote: Compressing objects: 100% (53/53), done.
+   remote: Total 62 (delta 27), reused 44 (delta 9)
+   Unpacking objects: 100% (62/62), done.
+   From https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY
+    * [new branch]      master     -> upstream/master
+   ```
+
+5. 切换到自己的master上，然后把upstream分支上更新内容合并到master上。
+
+   ```shell
+   $ git checkout master
+   Switched to branch 'master'
+   $ git merge upstream/master
+   Updating a422352..5fdff0f
+   Fast-forward
+    README                    |    9 -------
+    README.md                 |    7 ++++++
+    2 files changed, 7 insertions(+), 9 deletions(-)
+    delete mode 100644 README
+    create mode 100644 README.md
+   ```
+
+这时你的本地master就和上游同步成功啦，但是这只是表示你的本地master，一般你还需要把本地master同步到GitHub下的远程分支上。
+
+``` shell
+$ git  push origin master
+```
 
 ### 参考链接(Reference)
 
