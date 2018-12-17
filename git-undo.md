@@ -1,7 +1,7 @@
 ---
-title: Stackoverflow Git最热问题汇总
-subtitle: Git奇技淫巧
-description: Git
+title: Git撤消概括
+subtitle: 谁还没有一颗想改变历史的心呢？
+description: git reset,git revert,git checkout,git rebase,git head,git undo,git撤消,git撤回
 date: 2018-12-16
 layout: default
 bg_url: "assets/images/git-hot-question.jpg"
@@ -10,7 +10,7 @@ category: 工具
 
 ### I.Git撤消之谜
 
-[Stackoverflow按投票(votes)排序搜索git](https://stackoverflow.com/questions/tagged/git?sort=votes&pageSize=30)，前15+的问题都是关于一个主题：**求解各式各样的撤消**。Github也早在2015年就贴心地把常见撤消形式分类总结成简单易懂的情景再现:[How to undo(almost) anything with git](https://blog.github.com/2015-06-08-how-to-undo-almost-anything-with-git/)。可见初学者对git撤消是有很多疑惑点。不过，不论是Stackoverflow还是Github都侧重针对具体问题/场景提出纠正流程。所以本文尝试把这些命令背后的原理总结，只有理解原理，以后遇到什么问题，就能自己快速解决。
+[Stackoverflow按投票(votes)排序搜索git](https://stackoverflow.com/questions/tagged/git?sort=votes&pageSize=30)，前15+的问题全部都是一个主题：**求解各式各样的撤消**。Github也早在2015年就贴心地把git常见撤消分类总结成简单易懂的情景再现:[How to undo(almost) anything with git](https://blog.github.com/2015-06-08-how-to-undo-almost-anything-with-git/)。可见初学者对git撤消是有很多疑惑点。不过，不论是Stackoverflow还是Github都侧重针对具体问题/场景提出纠正流程，虽然受益良多，但是总感觉太零碎，没能连成系统，于是就有了这篇总结。
 
 ### II.Git工作区/暂存区/版本库
 
@@ -24,10 +24,10 @@ category: 工具
 
 从上图的流程可以看出，撤消无非就是分成四大类：
 
-* 撤消工作区的内容。
-* 撤消暂存区的改动。
-* 撤消本地版本库的改动。
-* 撤消远程版本库的改动。
+* 撤消工作区改动。
+* 撤消暂存区改动。
+* 撤消本地版本库改动。
+* 撤消远程版本库改动。
 
 ### III.HEAD~和HEAD^区别
 
@@ -37,24 +37,24 @@ category: 工具
 git branch -f Branch <SHA>
 ```
 
-- *HEAD~*是*HEAD~1*的简写，它指HEAD的上一个commit，*HEAD~2*指HEAD的上一个commit的上一个commit。以此类推。
-- *HEAD^*是*HEAD^1*的简写，它指HEAD的上一个commit，但是如果当前commit是由两个commit合并而成时，父commit就有了2个commit，所以区别是*HEAD^1*指父commit中的第一个commit，*HEAD^2*则指第二个commit,如果区分它们谁是第一/二，可以使用*git log* 看出来。
+- **HEAD~**是**HEAD~1**的简写，它指HEAD的上一个commit，**HEAD~2**指HEAD的上一个commit的上一个commit。以此类推。
+- **HEAD^**是**HEAD^1**的简写，它指HEAD的上一个commit，但是如果当前commit是由两个commit合并而成时，父commit就有了2个commit，所以区别是**HEAD^1**指父commit中的第一个commit，**HEAD^2**则指父commit的第二个commit,如果区分它们谁是第一/二，可以使用*git log* 看出来。
 
 ![head](/assets/images/git-graph.svg)
 
 还想了解HEAD,Branch更多的内容。推荐玩一下游戏:[LearnGitBranching](https://learngitbranching.js.org/)，通关后，你将对它们有一个非常直观深刻的认识。
 
-本文中的所有*SHA*都可以用*HEAD^*或*HEAD~*来代表相对的位置的SHA。
+本文中的所有*SHA*都可以用**HEAD^**或**HEAD~**来代表相对的位置的SHA。
 
-### IV.撤消工作区
+### IV.撤消工作区改动
 
-工作区存放的是还未使用`git add`添加到暂存区的内容：
+工作区存放的是还未使用`git add`添加到暂存区的改动：
 
 ```shell
 git checkout <bad filename>
 ```
 
-警告：这会让文件的修改完全消失掉，恢复成git能记录的最新的状态。所以你必须非常确信是不是有必要这样做。可以使用`git diff` 先确认改动的内容都是不需要的。
+警告：这会让文件的修改完全消失掉，恢复成git能记录的最新状态。所以你必须非常确信是不是有必要这样做。可以使用`git diff` 先比较下改动的内容是不是真的不需要了。
 
 ### V.撤消暂存区改动
 
@@ -78,24 +78,22 @@ git reset --hard <last good SHA>
 
 如果reset后面是指定的*SHA*。 默认情况，它会在还原时把改动都放到工作区----commit消失了，但是改动还在硬盘上。如果你非常确信已不需要这部分改动。可以加上“--hard”选项。它会直接把改动丢弃掉。总之：默认会把改动移到工作区，加入“-hard”会把改动直接移除掉。
 
-👉 **SHA**可以使用以下命令查看：
+👉 **SHA**可以使用**HEAD^~**来指定相对位置或使用以下命令查看：
 
 ```shell
 git log --oneline
 ```
 
-还有一种常见的情况：
+还有一种常见的情况：重新编辑最近一次的commit改动。
 
-* 重新编辑最近一次的commit改动。
+已使用`git commit -m "Fixes bug #123"`但是还没`git push`到远端。这里你意识到日志写错了，应该是*Fixes bug #1234*。
 
-  已使用`git commit -m "Fixes bug #123"`但是还没`git push`到远端。这里你意识到日志写错了，应该是*Fixes bug #1234*。
+```shell
+git commit --amend
+git commit --amend -m "Fiexd bug #1234"
+```
 
-  ```shell
-  git commit --amend
-  git commit --amend -m "Fiexd bug #1234"
-  ```
-
-  `—amend`会把上一次的commit和在暂存区(使用`git add`过的文件)组合在成一条新的commit。如果暂存区里没有改动。它就相当于重新写一下上一条的commit日志。
+`—amend`会把上一次的commit和在暂存区(使用`git add`过的文件)组合在成一条新的commit。如果暂存区里没有改动。它就相当于重新写一下上一条的commit日志。
 
 ### VII.撤消远程版本库改动
 
