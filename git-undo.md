@@ -125,7 +125,7 @@ revert会创建一条与给定*SHA*相反(逆向)的提交改动。所有在旧c
 
   为当前的修改新建一个分支feature，然后把master分支reset到和远程master一样的状态，然后再切换到新分支即可。
 
-* 工作分支与最新的master分支差距非常大.
+* 工作分支与最新的master分支差距非常大时，使用rebase同步最新内容到feature上.
 
   ```shell
   git checkout feature
@@ -147,7 +147,29 @@ revert会创建一条与给定*SHA*相反(逆向)的提交改动。所有在旧c
 
 [Rebase](https://git-scm.com/docs/git-rebase)是一个功能非常复杂的命令，本文只讲如何利用它来改变历史！
 
+```shell
+ git rebase --interactive HEAD~7
+```
 
+用编辑器打开前7条的commit，根据提示进行整理。一共有6个选项。
+
+* **pick**: 不改变commit任何内容，你可以通过上下移动这条commit来改变排列顺序。
+
+* **reword**: 与pick类似，不改变内容，但可以重写提交日志。
+
+* **edit**： 修改commit内容，可以再继续rebase前进行更多提交，这就允许装大型提交分割成较小的提交，或删除提交中的错误更改。
+
+* **squash**：把多个commit合并成一个commit，并使用一个新的commit message来描述它们。对整理message非常有用。
+
+* **fixup**: 与squash类似，但是引commit会merged到上一条commit中，并丢弃当前的commit message。
+
+* **exec**: 可以直接另启一行，执行任意的shell命令。比如你在每个commit后都执行exec run test，确保你的每一步commit都成功跑过test。不过最常用的方式还是：
+
+  ```shell
+  git rebase --interactive --exec "cmd" some-ref
+  #或者
+  git rebase -ix "cmd" some-ref
+  ```
 
 ### X.拓展阅读
 
