@@ -22,7 +22,7 @@ category: 技术
 
 因此在90年代你可以得到公开发布的BSD，System5，除此之外，还有[Andrew Tannenbaum](https://en。wikipedia。org/wiki/Andrew_S。_Tanenbaum)编写用于教学生操作系统设计基础知识的[MINIX](https://en。wikipedia。org/wiki/MINIX)。MINIX被远在芬兰一名叫[Linus Torvalds](https://en。wikipedia。org/wiki/Linus_Torvalds)的大学生所发觉，随后决心从头写一个操作系统。他成功做到了并公开向全世界发布。这份[公开声明](https://groups。google。com/forum/#!msg/comp。os。minix/dlNtH7RRrGA/SwRavCzVE7gJ)的重点在于:
 
-![image-20190615204949372](/Users/zhongwen/Library/Application Support/typora-user-images/image-20190615204949372.png)
+![linux](https://user-images.githubusercontent.com/3116225/59553224-a3718a80-8fc4-11e9-8912-5e85c9667ba5.jpg)
 
 1. 它是运行在386电脑上的，不是大型机或超级计算机，这可以让学生在自己的家里也可开发。
 2. 工具集中的bash，gcc都是使用的GNU工具集。
@@ -38,7 +38,7 @@ category: 技术
 
 说话有这么多的Linux版本：
 
-![Linux_Distribution_](/Users/zhongwen/截图存放/Linux_Distribution_.jpg)
+![Linux_Distribution_](https://user-images.githubusercontent.com/3116225/59553212-8341cb80-8fc4-11e9-903a-da9fd33505cc.jpg)
 
 [如何选择一款适合自己的呢](https://librehunt.org/)?，⌨️你只要google linux distros就会出来相关内容。
 
