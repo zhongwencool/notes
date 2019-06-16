@@ -43,7 +43,7 @@ category: 技术
 
 随后Linux开发大部分都参照了UNIX哲学，得到了大量来自有BSD和System5背景开发者的关注。但真正开始起飞来源于1992年Linux开始支持X windows。这意味着你可以拥有一个带windows的桌面，你可以找开多个终端，linux开始在开发者中大量被下载使用。迅猛发展直到现在，Android，Chrome OS和相当比例的web server都使用的Linux内核，不过因为Linux不是UNIX或UNIX的克隆版本，所以它通常都叫**unix-like**，因为它还是继承了UNIX哲学的。
 
-### 总结
+### 总结(Summary)
 
 1. 基本Linux内核开发，也派生出了很多版本，如RedHat，fedora， arch等，这些版本打包了一系列增加的工具（KDE 桌面，Gnome桌面，libera office，Chrome)，但它的内核是Linux。
 2. FreeBSD是基于不含有AT&T代码的免费UNIX版本(BSD 4.4 light)。最广为流传的是Mac OS。由于严格遵循BSD规范，所以在Mac下使用`find`命令必须加路径，而在Linux使用的是GNU标准，GNU额外加了很多功能的，[比如现在这个`find`不输入路径则使用当前路径](https://stackoverflow.com/questions/17548854/difference-between-mac-find-and-linux-find)。
@@ -59,7 +59,7 @@ category: 技术
 
 PS: 在Steve Job去世后一周，Dennis Richie也过世了，享年70岁。不过这个消息并没有得到大众太多关注。
 
-### 参照资料
+### 参照(Reference)
 
 1. [操作系统革命-Revolution OS记录片](https://www.bilibili.com/video/av9512574/)。
 
