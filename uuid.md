@@ -98,9 +98,9 @@ def539e8-d298-4575-b769-b55d7637b51e
 ```
 
 其中4位代表版本，2-3位代表variant。余下的122-121位都是全部随机的。即有2的122次方(5.3后面36个0)个UUID。一个标准实现的UUID库在生成了2.71万亿个UUID会产生重复UUID的可能性也只有50%的概率
-$$
-{\displaystyle n\approx {\frac {1}{2}}+{\sqrt {{\frac {1}{4}}+2\times \ln(2)\times 2^{122}}}\approx 2.71\times 10^{18}.}
-$$
+
+![uuid](https://user-images.githubusercontent.com/3116225/59972542-82f89000-95c3-11e9-8f58-0ed541d5e409.jpg)
+
 这相当于每秒产生10亿的UUID，持续85年，而把这些UUID都存入文件，每个UUID占16bytes,总需要45 EB(exabytes)，比目前最大的数据库(PB)还要大很多倍。
 
 ### Summary
