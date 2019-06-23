@@ -87,7 +87,7 @@ uuid -n 3 -v3 ns:URL http://www.baidu.com
 
 ### Version4(random)
 
-
+这个版本使用最为广泛:
 ```shell
 uuid -n 5 -v4
 a3535b78-69dd-4a9e-9a79-57e2ea28981b
@@ -97,7 +97,7 @@ a9ba3122-d89b-4855-85f1-92a018e5c457
 def539e8-d298-4575-b769-b55d7637b51e
 ```
 
-这个版本的使用使用最为广泛，其中4位代表版本，2-3位代表variant。余下的122-121位都是全部随机的。即有2的122次方(5.3后面36个0)个UUID。一个标准实现的UUID库在生成了2.71万亿个UUID会产生重复UUID的可能性也只有50%的概率
+其中4位代表版本，2-3位代表variant。余下的122-121位都是全部随机的。即有2的122次方(5.3后面36个0)个UUID。一个标准实现的UUID库在生成了2.71万亿个UUID会产生重复UUID的可能性也只有50%的概率
 $$
 {\displaystyle n\approx {\frac {1}{2}}+{\sqrt {{\frac {1}{4}}+2\times \ln(2)\times 2^{122}}}\approx 2.71\times 10^{18}.}
 $$
