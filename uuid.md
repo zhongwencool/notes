@@ -1,5 +1,5 @@
 ---
-title: UUID
+title: UUID如何保证唯一性
 subtitle: Universally Unique IDentifier
 description: UUID,UUID使用场景,UUID唯一性
 date: 2019-06-23
@@ -13,7 +13,7 @@ category: 技术
 
 [UUID(Universally Unique IDentifier)](https://en.wikipedia.org/wiki/Universally_unique_identifier)是一个128位数字的唯一标识。[RFC 4122](https://tools.ietf.org/html/rfc4122)描述了具体的规范实现。本文尝试从它的结构一步步分析为什么它能做到唯一性？及各个版本的使用场景。
 
-### Format(结构)
+### Format
 
 UUID使用16进制表示，共有36个字符(32个字母数字+4个连接符"-")，格式为`8-4-4-4-12`，如：
 
