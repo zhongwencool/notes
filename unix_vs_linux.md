@@ -41,7 +41,7 @@ category: 技术
 2. 工具集中的bash，gcc都是使用的GNU工具集。
 3. 完全Free。
 
-随后Linux开发大部分都参照了UNIX哲学，得到了大量来自有BSD和System5背景开发者的关注。但真正开始起飞来源于1992年Linux开始支持X windows。这意味着你可以拥有一个带windows的桌面，你可以找开多个终端，linux开始在开发者中大量被下载使用。迅猛发展直到现在，Android，Chrome OS和相当比例的web server都使用的Linux内核，不过因为Linux不是UNIX或UNIX的克隆版本，所以它通常都叫**unix-like**，因为它还是继承了UNIX哲学的。
+随后Linux开发大部分都参照了UNIX哲学，得到了大量来自有BSD和System5背景开发者的关注。但真正开始起飞来源于1992年Linux开始支持X window。这意味着你可以拥有一个带window的桌面，你可以找开多个终端，linux开始在开发者中大量被下载使用。迅猛发展直到现在，Android，Chrome OS和相当比例的web server都使用的Linux内核，不过因为Linux不是UNIX或UNIX的克隆版本，所以它通常都叫**unix-like**，因为它还是继承了UNIX哲学的。
 
 ### Summary
 
