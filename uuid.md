@@ -34,7 +34,7 @@ UUID使用的是大数位format([big-endian](https://en.wikipedia.org/wiki/Endia
 
 UUID现有5种版本，是根据不同的使用场景划分的，而不是根据精度，所以Version5并不会比Version1精度高，在精度上，**大家都能保证唯一性，重复的概率近乎于0**。
 
-### Version1(date-time MAC address)
+### V1(date-time MAC address)
 
 基于时间戳及MAC地址的UUID实现。它包括了48位的MAC地址和60位的时间戳，
 
@@ -53,15 +53,15 @@ uuid -n 5 -v1
 
 其实v1为了保证唯一性，当时间精度不够时，会使用13~14位的clock sequence来扩展时间戳，比如：
 
-当UUID的生产成速率太快，超过了系统时间的精度。时间戳的低位部分会每增加一个UUID就+1的操作来模拟更高精度的时间戳，换句话说，就是当系统时间精度无会区分2个UUID的时间先后时，为了保证唯一性，会在其中一个UUID上+1。所以UUID重复的概率几乎为0，时间戳加扩展的clock sequence一共有74bits,(2的74次方，约为1.8后面加22个零),即在每个节点下，每秒可产生1630亿不重复的UUID(因为只精确到了秒,不再是74位，所以换算了一下)。
+当UUID的生产成速率太快，超过了系统时间的精度。时间戳的低位部分会每增加一个UUID就+1的操作来模拟更高精度的时间戳，换句话说，就是当系统时间精度无法区分2个UUID的时间先后顺序时，为了保证唯一性，会在其中一个UUID上+1。所以UUID重复的概率几乎为0，时间戳加扩展的clock sequence一共有74bits,(2的74次方，约为1.8后面加22个零),即在每个节点下，每秒可产生1630亿不重复的UUID(因为只精确到了秒,不再是74位，所以换算了一下)。
 
 相对于其它版本，v1还加入48位的MAC地址，这依赖于网卡供应商能提供唯一的MAC地址，同时也可能通过它反查到对应的MAC地址。[Melissa](https://en.wikipedia.org/wiki/Melissa_(computer_virus))病毒就是这样做到的。
 
-### Version2(date-time Mac address)
+### V2(date-time Mac address)
 
 这是最神秘的版本，RFC没有提供具体的实现细节，以至于大部分的UUID库都没有实现它，只在特定的场景(DCE security)才会用到。所以绝大数情况，我们也不会碰到它。
 
-### Version3,5(namespace name-based)
+### V3,5(namespace name-based)
 
 V3和V5都是通过hash namespace的标识符和名称生成的。V3使用[MD5](https://en.wikipedia.org/wiki/MD5)作为hash函数，V5则使用[SHA-1](https://en.wikipedia.org/wiki/SHA-1)。
 
@@ -85,7 +85,7 @@ uuid -n 3 -v3 ns:URL http://www.baidu.com
 
 把V3的hash算法由MD5换成SHA-1就成了V5。
 
-### Version4(random)
+### V4(random)
 
 这个版本使用最为广泛:
 ```shell
