@@ -24,9 +24,9 @@ xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
 
 M中使用4位来表示UUID的版本，N中使用1-3位表示不同的variant。如上面所示：M =1, N = a表示此UUID为version-1，variant-1的UUID(Time-based ECE/RFC 4122 UUID)。
 
-但是为什么最开始说它是一个128位的唯一标识呢？这里明明字母位数是(8+4+4+12)*8=256位。
+但是为什么最开始说它是一个128位的唯一标识呢？这里明明字母位数是(8+4+4+4+12)*8=256位。
 
-因为上面的字母是用的16进制，一个16进制只代表4个bit，所以应该是(8+4+4+12)*4=128位。
+因为上面的字母是用的16进制，一个16进制只代表4个bit，所以应该是(8+4+4+4+12)*4=128位。
 
 UUID使用的是大数位format([big-endian](https://en.wikipedia.org/wiki/Endianness#Big))，比如：
 
