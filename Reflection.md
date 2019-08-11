@@ -30,14 +30,15 @@ interface Runnable {public void run();}
 public class Audi extends Car implements Runnable {
     Audi(int velocity){this.velocity = velocity;}
     public void run() {
-        System.out.println(this.getClass().getSimpleName() + " run " + velocity + "km/h");
+      String className = this.getClass().getSimpleName();
+      System.out.println(className + " run " + velocity + "km/h");
     }
 }
 // CarFactory.java
 public class CarFactory {
     public static void main(String[] args) {
-        Audi audi = new Audi(120);
-        audi.run();
+      Audi audi = new Audi(120);
+      audi.run();
     }
 }
 ```
@@ -47,8 +48,8 @@ public class CarFactory {
 ```java
 public class CarFactory {
     public static void main(String[] args) {        
-        Tesla tesla = new tesla(150);
-        tesla.run();
+      Tesla tesla = new tesla(150);
+      tesla.run();
     }
 }
 ```
@@ -60,10 +61,11 @@ package com.car.test;
 // Tesla.java
 // 省略以前已有不变的Audi
 public class Tesla extends Car implements Runnable {
-    Tesla(int velocity){this.velocity = velocity;}
-    public void run() {
-        System.out.println(this.getClass().getSimpleName() + " run " + velocity + "km/h");
-    }
+  Tesla(int velocity){this.velocity = velocity;}
+  public void run() {
+    String name = this.getClass().getSimpleName();
+    System.out.println(name + " run " + velocity + "km/h");
+  }
 }
 ```
 
@@ -76,32 +78,32 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class CarFactory {
-    public static void main(String[] args) {
-        try {
-            //通过命令行把动态所需要测试的类名传入测试主函数。
-            //args[0] = "com.car.test.Tesla".
-            //args[1] = "140".
-            //得到类名.此函数需catch异常 ClassNotFoundException.
-            Class<?> c = Class.forName(args[0]);            
-            //找到对应的构造函数并构造出实例
-            int velocity = Integer.parseInt(args[1]);
-            Object car = c.getDeclaredConstructor(int.class).newInstance(velocity);
-            //找到需要测试的函数定义 
-            Method method = c.getDeclaredMethod("run");
-            //执行对应函数
-            method.invoke(car);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+  public static void main(String[] args) {
+    try {
+      //通过命令行把动态所需要测试的类名传入测试主函数。
+      //args[0] = "com.car.test.Tesla".
+      //args[1] = "140".
+      //得到类名.此函数需catch异常 ClassNotFoundException.
+      Class<?> c = Class.forName(args[0]);            
+      //找到对应的构造函数并构造出实例
+      int velocity = Integer.parseInt(args[1]);
+      Object car = c.getDeclaredConstructor(int.class).newInstance(velocity);
+      //找到需要测试的函数定义 
+      Method method = c.getDeclaredMethod("run");
+      //执行对应函数
+      method.invoke(car);
+    } catch (ClassNotFoundException e) {
+       e.printStackTrace();
+    } catch (NoSuchMethodException e) {
+       e.printStackTrace();
+    } catch (IllegalAccessException e) {
+       e.printStackTrace();
+    } catch (InstantiationException e) {
+       e.printStackTrace();
+    } catch (InvocationTargetException e) {
+       e.printStackTrace();
     }
+ }
 }
 ```
 
@@ -129,16 +131,16 @@ public class CarFactory {
 package com.car.test;
 //car.java
 class Car {
-    int velocity;
-    public String getName() {return "Car";}
+  int velocity;
+  public String getName() {return "Car";}
 }
 // Tesla.java
 public class Tesla extends Car implements Runnable {
-    Tesla(int velocity){this.velocity = velocity;}
-    // @Override
-    public get_name() { return "Tesla";}
-    // 省略以前有的
-    }
+  Tesla(int velocity){this.velocity = velocity;}
+  // @Override
+  public get_name() { return "Tesla";}
+  // 省略以前有的
+ }
 }
 ```
 
@@ -185,43 +187,44 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME) // 永久保存
 @Target(ElementType.METHOD) //作用于方法
 public @interface DriveAccess {
-    public boolean canDrive() default false; //默认返回false
+  public boolean canDrive() default false; //默认返回false
 }
 // Tesla.java
 public class Tesla extends Car implements Runnable {
-    Tesla(int velocity) { this.velocity = velocity; }
+  Tesla(int velocity) { this.velocity = velocity; }
 
-    @Override
-    public String getName() { return "Tesla"; }
+  @Override
+  public String getName() { return "Tesla"; }
 
-    @DriveAccess(canDrive = true)
-    public void run() {
-        System.out.println(this.getClass().getSimpleName() + " run " + velocity + "km/h");
+  @DriveAccess(canDrive = true)
+  public void run() {
+    String name = this.getClass().getSimpleName();
+    System.out.println(name + " run " + velocity + "km/h");
     }
 }
 // CarFactory.java
 import java.lang.reflect.Method;
 
 public class CarFactory {
-    public static void main(String[] args) throws Exception {        
-        Class<?> car = Class.forName(args[0]);
-        for (Method method : car.getDeclaredMethods()) {
-            if (method.isAnnotationPresent(DriveAccess.class)) {
-                DriveAccess access = method.getAnnotation(DriveAccess.class);
-                String methodName = method.toGenericString();
-                if (access.canDrive()) {
-                    System.out.println(methodName + " method can be accessed... ");
-                    Object c = car.getDeclaredConstructor(int.class).newInstance(100);
-                    method.invoke(c);
-                } else {
-                    System.out.println(methodName + " method can not be accessed... ");
-                }
-            }else {
-                System.out.println(methodName + " don't have DriveAccess Annotation...");
-            }
-        }
-        }
-    }
+  public static void main(String[] args) throws Exception {        
+    Class<?> car = Class.forName(args[0]);
+    for (Method method : car.getDeclaredMethods()) {
+      if (method.isAnnotationPresent(DriveAccess.class)) {
+          DriveAccess access = method.getAnnotation(DriveAccess.class);
+          String methodName = method.toGenericString();
+          if (access.canDrive()) {
+            System.out.println(methodName + " method can be accessed... ");
+            Object c = car.getDeclaredConstructor(int.class).newInstance(100);
+            method.invoke(c);
+          } else {
+            System.out.println(methodName + " method can not be accessed... ");
+          }
+      }else {
+       System.out.println(methodName + " don't have DriveAccess Annotation...");
+     }
+   }
+}
+}
 }
 ```
 
