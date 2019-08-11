@@ -1,6 +1,6 @@
 ---
 title: Java反射和注解入门
-subtitle: 谁还没有一颗想改变历史的心呢？
+subtitle: With great power comes great responsibility.
 description: java反射,java注解,java,reflection,annotations
 date: 2019-08-11
 layout: default
@@ -8,9 +8,7 @@ bg_url: "assets/images/code.jpg"
 category: Java
 ---
 
-
-
-### Reflection
+## Reflection
 
 今天来挑战一下**如何在2000字以内把Reflection作用说明白**？
 
@@ -117,13 +115,13 @@ public class CarFactory {
 
 不过注解的本质也是通过反射来实现的。
 
-### 注解工作原理
+## Annotations
 
 在文章的开始处写反射是对类的属性/方法/构造函数的操作，并没有提到注解。但是通过Reflection API列表我们可以看到他有[getAnnotation](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/AnnotatedElement.html#getAnnotation-java.lang.Class-)之类的函数，所以注解也是可以读写操作的。不过想对于上面说的，稍微复杂一点。
 
 解析注解的方式有两种，**编译期检查和运行期反射**。
 
-#### 编译期检查
+### 1.编译期检查
 
 常见到的就是`@Override`,编译器就会检查当前方法的方法签名是否真正重写了父类的某个方法，也就是比较父类中是否具有一个同样的方法签名。比如我们在上面的Car类中增加一个方法得到名字：
 
@@ -153,7 +151,7 @@ public class Tesla extends Car implements Runnable {
 * `@Deprecated`标记当前类/方法/字段不再被推荐使用，下次版本可能会不在支持它。
 * `@SuppressWarnings`明确告诉编译器这个警告我已发现了，你不用再来烦我。
 
-#### 元注解
+### 2.元注解
 
 为了在注解定义时规定生命周期(编译期/永久保存etc),作用范畴(字段/方法etc)，又引入了注解的注解，也就是**元注解**，它是主要用于修饰注解的注解。比如在`@override`的定义中
 
@@ -169,7 +167,7 @@ public @interface Override {
 * `@Documented`是否在JavaDoc文档中出现。
 * `Inherited`是否允许子类继承该注解。
 
-#### 运行期注解
+### 3.运行期注解
 
 下面我们稍微改造一个上面car的例子来说明一下运行期的注解操作。
 
@@ -244,6 +242,6 @@ public java.lang.String com.car.test.Tesla.getName() don't have DriveAccess Anno
 
 
 
-### 总结
+## Summary
 
 运用Java Reflection API可以读取/操作类中所有的元素。非常灵活强大，因为灵活，也会带来很多不确定的危险。所以如果可以用其它方法实现的，最好不要用反射。
