@@ -15,7 +15,7 @@ category: 技术
 
 Prometheus和Grafana组合基本上是监控系统的标配。Prometheus做存储后端，Grafana做分析及可视化界面。
 
-![rabbitmq](/Users/zhongwen/截图存放/rabbitmq.png)
+![rabbitmq](./assets/images/rabbitmq.png)
 
 [普罗米修斯](https://prometheus.io)是开源的系统监控/报警工具库，功能非常全，且拥有活跃的开发者和[用户社区](https://prometheus.io/community/)。Prometheus通过HTTP**定期主动拉取**(Pull)的方式获得指标(直接获取或通过gateway推送)，在本地存储所有抓取的样本，并对这些数据运行规则，从现有数据聚合和记录新的时间序列，或生成警报。
 
@@ -119,7 +119,7 @@ Prometheus原生的可视化界面做得比较原始(主要用于调试)，所�
 
   再次查看浏览器打开graph查看：http://127.0.0.1:9090/graph。勾选`Enable query history`后直接输入以node就可以看到大量关于node为前缀的指标了。比如：`node_filesystem_avail_bytes`查看文件系统可用空间大小情况。
 
-​      ![node_filesystem_avail_bytes](/Users/zhongwen/截图存放/node_filesystem_avail_bytes.jpg)
+​      ![node_filesystem_avail_bytes](./assets/images/node_filesystem_avail_bytes.jpg)
 
 这个界面还是太原始了，但可以用来体验一下[PromQL](https://prometheus.io/docs/prometheus/latest/querying/basics/)。接下来演示一下接入grafana来展示这些数据。
 
@@ -153,7 +153,7 @@ sudo service grafana-server start
 * 设置Prometheus的对外URL（比如 http://IP:9090).
 * 点击Add添加
 
-![grafana_configuring_datasource](/Users/zhongwen/截图存放/grafana_configuring_datasource.png)
+![grafana_configuring_datasource](./assets/images/grafana_configuring_datasource.png)
 
 #### Prometheus图表展示
 
@@ -162,7 +162,7 @@ sudo service grafana-server start
 * 在Query字段中输入Prometheus表达式，会自动补全。
 * 自定义图表横坐标中指标的名称： Legend format。
 
-![grafana_qps_graph](/Users/zhongwen/截图存放/grafana_qps_graph.png)
+![grafana_qps_graph](./assets/images/grafana_qps_graph.png)
 
 ### 导入Dashboards
 
