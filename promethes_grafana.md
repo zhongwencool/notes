@@ -11,8 +11,6 @@ category: 技术
 
 ### Prometheus
 
-#### Prometheus+Grafana
-
 Prometheus和Grafana组合基本上是监控系统的标配。Prometheus做存储后端，Grafana做分析及可视化界面。
 
 ![rabbitmq](./assets/images/rabbitmq.png)
