@@ -1,5 +1,5 @@
 ---
-title: Prometheus Grafana基本概念
+title: Prometheus Grafana搭建备忘
 subtitle: 
 description: prometheus,grafana,monitor
 date: 2019-08-25
