@@ -247,6 +247,6 @@ $ git  push origin master
 **纸上得来终觉浅，绝知此事要躬行。**
 
 [某文](https://github.com/zhongwencool)、
-[CY](https://github.com/Confidential-CY)
-[王昭君](https://github.com/TianliJin/)
+[CY](https://github.com/Confidential-CY)、
+[王昭君 ❄️ ](https://github.com/TianliJin)
 
