@@ -1,17 +1,19 @@
 ---
-title: gloo基础知识
-subtitle: gloo overview
-description: gloo,envoy,route,gateway
+title: gloo基本知识
+subtitle: gloo基础知识入门
+description: gloo,envoy,gateway,route
 date: 2020-04-26
 layout: default
 category: 技术
 ---
 
-### Architechture(架构)
+
+
+## Architechture(架构)
 
 Gloo通过[Envoy XDS gRPC API](https://github.com/envoyproxy/data-plane-api/blob/master/API_OVERVIEW.md)来动态更新Envoy配置, **更方便的控制Envoy Proxy, 并保留扩展性**..本质是一个Envoy xDS配置翻译引擎, 为Envoy提供高级配置(及定制的Envoy过滤器).它监控各种配置源的更新,并立即响应通过gRPC更新给Envoy.
 
-#### Component Architechture
+### Component Architechture
 
 ![architechture](assets/images/component_architecture.png)
 
@@ -21,13 +23,13 @@ Gloo通过[Envoy XDS gRPC API](https://github.com/envoyproxy/data-plane-api/blob
   如上图kubenetes的Upstream自动发现机制: 通过自己的插件把注册信息写到Endpoint Discovery中,然后Gloo监控它变化,并把这些信息通过自己翻译引擎(Translation Engine)成一个完整的xDS Server快照,传给Envoy,让他构建这个服务的路由规则及过滤器设置.
 - **Reporter**:会收集翻译引擎处理的所有Upstream及Vritual service验证报告.任何无效的配置对象都会反馈给用户.无效的对象会被标记为"Rejected",并在用户配置中给出详细的错误信息.
 
-#### Discovery Architechture
+### Discovery Architechture
 
 ![discovery Architechture](assets/images/discovery_architecture.png)
 
 Gloo支持k8s, consul的Upstream discovery, 还要以[自己开发自定义的组件](https://docs.solo.io/gloo/latest/guides/dev/writing-upstream-plugins/). 
 
-#### Deployment Architecture
+### Deployment Architecture
 
 Gloo可以在各种基础设施上以多种方式部署, 推荐是使用kubernets,它可以简化操作.但并不一定要部署在kubernets上.
 
@@ -35,7 +37,7 @@ Gloo可以在各种基础设施上以多种方式部署, 推荐是使用kubernet
 
 点击[查看更多的部署方式](https://docs.solo.io/gloo/latest/introduction/architecture/deployment_arch/).
 
-### Concepts(核心概念)
+## Concepts(核心概念)
 
 通过下面这个简单的vritual services来理解gloo的核心概念:
 
@@ -59,14 +61,14 @@ spec:
             namespace: gloo-system
 ```
 
-#### Vritual Services
+### Vritual Services
 
 - 将一组路由规则规范在某个或多个域(domains)下面.
 - Gloo会建一个默认的virtualService是 `default`, 它会和`*`域名匹配.这会把header中没有Host(:authority)字段的请求,及那些不会找不到路由的请求都路由到这个域下面.
 - VirtualService都在同一个Gloo必须是唯一的,否则找不到路由.
 - 绝大多数实例使用中,让所有路由都放在一个VirtualService下就足够了,Gloo也会使用同一套路由规则来处理请求.如果只有一个VirtualServics时,会忽略header中的Host或:authority头部信息.
 
-#### Routes
+### Routes
 
 - Routes是VritualServices的核心组成.如果请求与路由上的matcher匹配了,那么它就把请求路由到对应的目的地上.路由由一系列的匹配规则(**a list of matchers**)及各种目的地组成.
   - **a single destination** 一个目地的.
@@ -75,21 +77,21 @@ spec:
 
 - 因为多个matcher可以匹配一个请求,所以路由的先后顺序很重要.Gloo会选择第一个与请求匹配的路由.所以必须把匹配任何路径(像自定义的404页面)请求,放在路由列表的最后面.
 
-#### Matchers
+### Matchers
 
 **Matchers**支持2种请求类型
 
 - **HTTP requests**中的请求属性: 对HTTP 来说就是: `path, method, header, query parameters`, 对应的HTTP2.0 就是header中的`:path, :method`属性.
 - **HTTP events**根据CloudEvents规范匹配HTTP事件属性.但CloudEvents 规范还处于 0.2 版本，将来会有更改。Event Matcher目前唯一匹配的属性是事件的事件类型（由 `x-event-type` 请求头指定）
 
-#### Destinations
+### Destinations
 
 - 匹配路由后,要将请求转发到Destinations,它可指向单一的目的地,也可以将路由流量分成到一系列加权的目地的上(a series of weighted destinations).
 - Desinations可以是`Upstream destination`也可以是`Function destination`.
 - Upstream destination类似于Evnoy集群.
 - Function destination: Gloo支持将请求路由到各种Upstream中的函数中.函数可以是无服务器的函数调用(Lambda, Google Cloud Function)也可以是REST API OPENAPI, XML/SOAP请求.还可以发布到消息队列中.
 
-#### Upstreams
+### Upstreams
 
 Upstreams定义了路由规则最终去向(Destinations).一般是通过服务发现(services discovery)自动加入,最基本的Upstream类型就是静态的Upstream: 它只需要告诉Gloo一个静态主机或dns名列表.复杂的Upstream有kubernets及AWS lambda upstream.
 
@@ -119,7 +121,7 @@ status:
 - **name**: 如何在Gloo中找到这个upstream.是一个标识符.
 - **spec:** kubernetes插件的`serviceName`,`serviceNamespaces`,Gloo路由时需要用到.
 
-#### Functions
+### Functions
 
 有些Upstream支持函数destinations, 比如: 我们可以在Upstream中添加一些HTTP函数.让Gloo根据这些函数把检验请求参数,然后将传入的请求格式化为Upstream服务所期望的参数.一个简单的示例:
 
@@ -153,12 +155,12 @@ spec:
 
 调用`curl http://url/petstore/findWithId/100`会路由到函数`findPetById(id)`中,其中Id的是通过`parameters`中的规则赋值的.
 
-#### Secrets
+### Secrets
 
 - 某些插件(如AWS Lambda Plugin)需要使用secrets来进行身份验证,配置SSL证书和其它不应该存储在明文配置的数据.
 - Gloo运行一个独立的(gorutine)控制器来保护Secrets.它有自己的storage layer.
 
-### Traffic Management
+## Traffic Management
 
 Gloo核心是一个强大的路由引擎.可以处理API到API的简单路由.也可以处理HTTP到gRPC协议转换.
 
@@ -169,14 +171,14 @@ Request -> Router -> Destinations(Upstream)
 得益于envoy proxy灵活的扩展性,gloo中在上面每一个环节中支持的类型都非常多样.
 下面以HTTP REST API为例子,演示一下基础路由功能.
 
-#### Gloo Configuration
+### Gloo Configuration
 
 Gloo配置布局分3层: `Gateway listeners`, `Virtual Services`, `Upstreams`.**大多数情况,我们只与VirtualServices进行交互**.可以通过它配置暴露给Gateway的API细节,还可以配置具体的路由规则.
 ![overview](assets/images/gloo-routing-concepts-overview.png)
 
 **Upstream**代表后端服务, **Gateway**控制监听端口,请求的入口.
 
-#### PetStore精确匹配
+### PetStore精确匹配
 
 部署一个完整的PetStore应用.路由规则matcher使用**Path精确匹配**.
 
@@ -366,7 +368,7 @@ Endpoints是由Gloo的**Function Discovery(fds)**服务发现的。之所以能�
 
   其中`glooctl proxy url` 这个是用于测试或查bug时,可以在集群外到达代理集群内的HTTP URL,你可以用同一个网络中的主机连接到这个地址上.简单来说这个就是gateway对外的URL.
 
-#### Prefix前置匹配
+### Prefix前置匹配
 
 新增路由`/find-pet/{id}` -> `default-petstore-8080/api/pets/{id}`, 把Id传到对应HTTP rest API中函数入参.
 
@@ -495,7 +497,7 @@ curl "$(glooctl proxy url)/pets/1/"
 
 这里返回了所有pets,因为多了`/`后rest-parameters里面的:path是`/pets/{id}`,多了`/`后变得无法匹配,所以相当于没有传Id,导致请求的是`findPetById("")`,此函数返回的是所有pets.
 
-#### regex正则匹配
+### regex正则匹配
 
 由于find-pet路由没有增加对查询Id的范围限制,所以我们可以把它使用regex作限制.
 
@@ -654,7 +656,7 @@ status:
 
 *Tips*:为了做好版管理,所以用get得到的YAML格式中有一个字段`resourceVersion`.如果你apply同一个文件2次,第二次会出错.你必须重新get最新的YAML文件以获取新的`resourceVersion`.
 
-#### 删除route
+### 删除route
 
 你可以使用glooctl删除不需要的路由规则.
 
@@ -666,7 +668,7 @@ glooctl rm route -i
 
 Matcher陈了上面说过的对Path进行匹配外,还可以对Header, Query Parameter, Method也作同样的匹配.
 
-#### Header路由示例
+### Header路由示例
 
 ```yaml
 - matchers:
@@ -688,7 +690,7 @@ Matcher陈了上面说过的对Path进行匹配外,还可以对Header, Query Par
 各个条件之间是与(and)的关系.上面就是:
 version=v1 `and` 必须有os_type字段 `and` type在小写的a-z之间`and` 没有Istest字段`and`Istrace必须有且不等于0
 
-#### Query Parameter路由示例
+### Query Parameter路由示例
 
 ```yaml
 - matchers:
@@ -704,7 +706,7 @@ version=v1 `and` 必须有os_type字段 `and` type在小写的a-z之间`and` 没
 
 os是ios `and ` 必须有location字段 `and` userno 是以a开头,全小写,共10位的用户.
 
-#### Method路由示例
+### Method路由示例
 
 ```yaml
 - matchers:
@@ -715,7 +717,7 @@ os是ios `and ` 必须有location字段 `and` userno 是以a开头,全小写,共
 
 限制HTTP Method,可以指定一个列表.
 
-### Transformations
+## Transformations
 
 Gloo可以在请求到达到指定的Service前把请求进行任意修改(**requestTransformation**),也可以在应答返回给Client之前把应答进行任意修改(**responseTransformation**).
 
@@ -733,7 +735,7 @@ transformations:
   - **headerBodyTransform**: 把所有的header内容json的形式都写到body里面.分成**headers**及**body**字段.
   - **transformationTemplate**: 使用转换模板.这是最灵活的.下面会详细介绍属性.
 
-#### transformationTemplate
+### transformationTemplate
 
 ```yaml
 transformationTemplate:
@@ -888,7 +890,7 @@ Templates是Transformation的核心,本质就是**利用上面这几个关键字
   - `body()`: 返回body.
   - `context()`:以json的方式返回所有的上下文(几乎是所有信息了,你打出来一看就知道了).
 
-#### Update Response Code
+### Update Response Code
 
 很多Rest API的设计会把Response请求都返回200 ok, 业务出错的情况则在body里面规定一个`ret`返回码,和`err_msg`字段.比如:腾讯公开的API都是这样设计的:https://wiki.open.qq.com/wiki/v3/user/get_info
 如果我们不希望把具体的业务错返回用户,则可以写一个transformations只有body里面有ret不为0,则返回400.
@@ -905,7 +907,7 @@ options:
 
 这里可以直接使用`ret`变量,是因为前面默认是以json解析body,然后inja template支持这样的语法取json body.
 
-#### Extrac Query Parameters
+### Extrac Query Parameters
 
 把QueryString变成header里面的kv.
 
@@ -940,7 +942,7 @@ curl "http:xxxxx/get?foo=foo-value&bar=bar=bar-value"
 curl -H foo=foo-value -H bar=bar-value "http:xxxxx/get"
 ```
 
-#### Update Request Path
+### Update Request Path
 
 ```yaml
 options:
