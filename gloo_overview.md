@@ -106,7 +106,7 @@ metadata:
   name: default-redis-6379
   namespace: gloo-system
 spec:
-  discoveryMetadata: {}
+  discoveryMetadata: \{\}
   kube:
     selector:
       gloo: redis
@@ -145,7 +145,7 @@ spec:
               functionName: findPetById
               parameters:
                 headers:
-                  :path: /petstore/findWithId/{id}
+                  :path: /petstore/findWithId/\{id\}
           upstream:
             name: petstore
             namespace: gloo-system
@@ -273,7 +273,7 @@ kind: Upstream
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"service":"petstore"},"name":"petstore","namespace":"default"},"spec":{"ports":[{"port":8080,"protocol":"TCP"}],"selector":{"app":"petstore"}}}
+      \{"apiVersion":"v1","kind":"Service","metadata":\{"annotations":\{\},"labels":\{"service":"petstore"\},"name":"petstore","namespace":"default"\},"spec":\{"ports":[\{"port":8080,"protocol":"TCP"\}],"selector":\{"app":"petstore"\}\}\}
   creationTimestamp: null
   generation: 4
   labels:
@@ -283,7 +283,7 @@ metadata:
   namespace: gloo-system
   resourceVersion: "5488"
 spec:
-  discoveryMetadata: {}
+  discoveryMetadata: \{\}
   kube:
     selector:
       app: petstore
@@ -297,8 +297,8 @@ spec:
         transformations:
           addPet:
             body:
-              text: '{"id": {{ default(id, "") }},"name": "{{ default(name, "")}}","tag":
-                "{{ default(tag, "")}}"}'
+              text: '\{"id": \{\{ default(id, "") \}\},"name": "\{\{ default(name, "")\}\}","tag":
+                "\{\{ default(tag, "")\}\}"\}'
             headers:
               :method:
                 text: POST
@@ -311,32 +311,32 @@ spec:
               :method:
                 text: DELETE
               :path:
-                text: /api/pets/{{ default(id, "") }}
+                text: /api/pets/\{\{ default(id, "") \}\}
               content-type:
                 text: application/json
           findPetById:
-            body: {}
+            body: \{\}
             headers:
               :method:
                 text: GET
               :path:
-                text: /api/pets/{{ default(id, "") }}
+                text: /api/pets/\{\{ default(id, "") \}\}
               content-length:
                 text: "0"
-              content-type: {}
-              transfer-encoding: {}
+              content-type: \{\}
+              transfer-encoding: \{\}
           findPets:
-            body: {}
+            body: \{\}
             headers:
               :method:
                 text: GET
               :path:
-                text: /api/pets?tags={{default(tags, "")}}&limit={{default(limit,
-                  "")}}
+                text: /api/pets?tags=\{\{default(tags, "")\}\}&limit=\{\{default(limit,
+                  "")\}\}
               content-length:
                 text: "0"
-              content-type: {}
-              transfer-encoding: {}
+              content-type: \{\}
+              transfer-encoding: \{\}
 status:
   reported_by: gloo
   state: 1
@@ -363,14 +363,14 @@ Endpoints是由Gloo的**Function Discovery(fds)**服务发现的。之所以能�
 
   ```bash
   $ curl $(glooctl proxy url)/all-pets
-  [{"id":1,"name":"Dog","status":"available"},{"id":2,"name":"Cat","status":"pending"}]
+  [\{"id":1,"name":"Dog","status":"available"\},\{"id":2,"name":"Cat","status":"pending"\}]
   ```
 
   其中`glooctl proxy url` 这个是用于测试或查bug时,可以在集群外到达代理集群内的HTTP URL,你可以用同一个网络中的主机连接到这个地址上.简单来说这个就是gateway对外的URL.
 
 ### Prefix前置匹配
 
-新增路由`/find-pet/{id}` -> `default-petstore-8080/api/pets/{id}`, 把Id传到对应HTTP rest API中函数入参.
+新增路由`/find-pet/\{id\}` -> `default-petstore-8080/api/pets/\{id\}`, 把Id传到对应HTTP rest API中函数入参.
 
 ```bash
 glooctl add route \
@@ -379,7 +379,7 @@ glooctl add route \
   --prefix-rewrite /api/pets
 ```
 
-这就是把`/find-pet/{id}` -> `default-petstore-8080/api/pets/{id}`
+这就是把`/find-pet/\{id\}` -> `default-petstore-8080/api/pets/\{id\}`
 
 使用glooctl 查看virtual service的对应的配置
 
@@ -402,10 +402,10 @@ glooctl add route \
   --path-prefix /pets \
   --dest-name default-petstore-8080 \
   --rest-function-name findPetById \
-  --rest-parameters :path='/pets/{id}'
+  --rest-parameters :path='/pets/\{id\}'
 ```
 
-这就是把`/pets/{id}` -> `default-petstore-8080`中的`findPetById`rest函数中.函数的入参id通过`--rest-parameters`中取.
+这就是把`/pets/\{id\}` -> `default-petstore-8080`中的`findPetById`rest函数中.函数的入参id通过`--rest-parameters`中取.
 
 使用`glooctl` 查看virtual service的具体配置.
 
@@ -421,7 +421,7 @@ $ glooctl get vs default --output yaml
             functionName: findPetById
             parameters:
               headers:
-                :path: /pets/{id}
+                :path: /pets/\{id\}
         upstream:
           name: default-petstore-8080
           namespace: gloo-system
@@ -439,8 +439,8 @@ $ glooctl get upstream --name default-petstore-8080 --output yaml
       transformations:
         addPet:
           body:
-            text: '{"id": {{ default(id, "") }},"name": "{{ default(name, "")}}","tag":
-              "{{ default(tag, "")}}"}'
+            text: '\{"id": \{\{ default(id, "") \}\},"name": "\{\{ default(name, "")\}\}","tag":
+              "\{\{ default(tag, "")\}\}"\}'
           headers:
             :method:
               text: POST
@@ -453,31 +453,31 @@ $ glooctl get upstream --name default-petstore-8080 --output yaml
             :method:
               text: DELETE
             :path:
-              text: /api/pets/{{ default(id, "") }}
+              text: /api/pets/\{\{ default(id, "") \}\}
             content-type:
               text: application/json
         findPetById:
-          body: {}
+          body: \{\}
           headers:
             :method:
               text: GET
             :path:
-              text: /api/pets/{{ default(id, "") }}
+              text: /api/pets/\{\{ default(id, "") \}\}
             content-length:
               text: "0"
-            content-type: {}
-            transfer-encoding: {}
+            content-type: \{\}
+            transfer-encoding: \{\}
         findPets:
-          body: {}
+          body: \{\}
           headers:
             :method:
               text: GET
             :path:
-              text: /api/pets?tags={{default(tags, "")}}&limit={{default(limit, "")}}
+              text: /api/pets?tags=\{\{default(tags, "")\}\}&limit=\{\{default(limit, "")\}\}
             content-length:
               text: "0"
-            content-type: {}
-            transfer-encoding: {}
+            content-type: \{\}
+            transfer-encoding: \{\}
 ....
 ```
 
@@ -485,17 +485,17 @@ $ glooctl get upstream --name default-petstore-8080 --output yaml
 
 ```bash
 $ curl "$(glooctl proxy url)/pets/1"
-{"id":1,"name":"Dog","status":"available"}
+\{"id":1,"name":"Dog","status":"available"\}
 ```
 
 注意: paramters中的`:path`是精确匹配的.如果你把url最后多写一个`/`, 变成`/pets/1/`,那就会
 
 ```bash
 curl "$(glooctl proxy url)/pets/1/"
-[{"id":1,"name":"Dog","status":"available"},{"id":2,"name":"Cat","status":"pending"}]
+[\{"id":1,"name":"Dog","status":"available"\},\{"id":2,"name":"Cat","status":"pending"\}]
 ```
 
-这里返回了所有pets,因为多了`/`后rest-parameters里面的:path是`/pets/{id}`,多了`/`后变得无法匹配,所以相当于没有传Id,导致请求的是`findPetById("")`,此函数返回的是所有pets.
+这里返回了所有pets,因为多了`/`后rest-parameters里面的:path是`/pets/\{id\}`,多了`/`后变得无法匹配,所以相当于没有传Id,导致请求的是`findPetById("")`,此函数返回的是所有pets.
 
 ### regex正则匹配
 
@@ -506,14 +506,14 @@ glooctl add route \
   --path-regex '/find-pet-1/[1-9]' \
   --dest-name default-petstore-8080 \
   --rest-function-name findPetById \
-  --rest-parameters :path='/find-pet-1/{id}'
+  --rest-parameters :path='/find-pet-1/\{id\}'
 ```
 
 ```bash
 $ curl http://localhost:80/find-pet-1/1
-{"id":1,"name":"Dog","status":"available"}
+\{"id":1,"name":"Dog","status":"available"\}
 $ curl http://localhost:80/find-pet-1/11
-{"code":404,"message":"path /api/pets-1/11 was not found"}%
+\{"code":404,"message":"path /api/pets-1/11 was not found"\}\%
 ```
 
 可以看到参数已经被限制在1-10之间了.
@@ -533,7 +533,7 @@ kind: Service
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"service":"petstore"},"name":"petstore","namespace":"default"},"spec":{"ports":[{"port":8080,"protocol":"TCP"}],"selector":{"app":"petstore"}}}
+      \{"apiVersion":"v1","kind":"Service","metadata":\{"annotations":\{\},"labels":\{"service":"petstore"\},"name":"petstore","namespace":"default"\},"spec":\{"ports":[\{"port":8080,"protocol":"TCP"\}],"selector":\{"app":"petstore"\}\}\}
   creationTimestamp: "2020-04-22T14:32:09Z"
   labels:
     service: petstore
@@ -553,7 +553,7 @@ spec:
   sessionAffinity: None
   type: ClusterIP
 status:
-  loadBalancer: {}
+  loadBalancer: \{\}
 ```
 
 可以看到在这个k8s的service中根本没有我们刚加入的gloo中的**routers**.
@@ -568,7 +568,7 @@ kind: VirtualService
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"gateway.solo.io/v1","kind":"VirtualService","metadata":{"annotations":{},"creationTimestamp":null,"generation":48,"name":"default","namespace":"gloo-system","resourceVersion":"93283"},"spec":{"virtualHost":{"domains":["*"],"routes":[{"matchers":[{"prefix":"/pets"}],"routeAction":{"single":{"destinationSpec":{"rest":{"functionName":"findPetById","parameters":{"headers":{":path":"/pets/{id}"}}}},"upstream":{"name":"default-petstore-8080","namespace":"gloo-system"}}}},{"matchers":[{"exact":"/all-pets"}],"options":{"prefixRewrite":"/api/pets"},"routeAction":{"single":{"upstream":{"name":"default-petstore-8080","namespace":"gloo-system"}}}},{"matchers":[{"regex":"/add-pet/[1-9]/[a-z]{2,10}/(pending|available)"},{"methods":["GET"]}],"routeAction":{"single":{"destinationSpec":{"rest":{"functionName":"addPet","parameters":{"headers":{":path":"/add-pet/{id}/{name}/{tag}"}}}},"upstream":{"name":"default-petstore-8080","namespace":"gloo-system"}}}}]}},"status":{"reported_by":"gateway","state":1,"subresource_statuses":{"*v1.Proxy.gloo-system.gateway-proxy":{"reported_by":"gloo","state":1}}}}
+      \{"apiVersion":"gateway.solo.io/v1","kind":"VirtualService","metadata":\{"annotations":\{\},"creationTimestamp":null,"generation":48,"name":"default","namespace":"gloo-system","resourceVersion":"93283"\},"spec":\{"virtualHost":\{"domains":["*"],"routes":[\{"matchers":[\{"prefix":"/pets"\}],"routeAction":\{"single":\{"destinationSpec":\{"rest":\{"functionName":"findPetById","parameters":\{"headers":\{":path":"/pets/\{id\}"\}\}\}\},"upstream":\{"name":"default-petstore-8080","namespace":"gloo-system"\}\}\}\},\{"matchers":[\{"exact":"/all-pets"\}],"options":\{"prefixRewrite":"/api/pets"\},"routeAction":\{"single":\{"upstream":\{"name":"default-petstore-8080","namespace":"gloo-system"\}\}\}\},\{"matchers":[\{"regex":"/add-pet/[1-9]/[a-z]\{2,10\}/(pending|available)"\},\{"methods":["GET"]\}],"routeAction":\{"single":\{"destinationSpec":\{"rest":\{"functionName":"addPet","parameters":\{"headers":\{":path":"/add-pet/\{id\}/\{name\}/\{tag\}"\}\}\}\},"upstream":\{"name":"default-petstore-8080","namespace":"gloo-system"\}\}\}\}]\}\},"status":\{"reported_by":"gateway","state":1,"subresource_statuses":\{"*v1.Proxy.gloo-system.gateway-proxy":\{"reported_by":"gloo","state":1\}\}\}\}
   creationTimestamp: null
   generation: 73
   name: default
@@ -588,7 +588,7 @@ spec:
               functionName: findPetById
               parameters:
                 headers:
-                  :path: /find-pet-1/{id}
+                  :path: /find-pet-1/\{id\}
           upstream:
             name: default-petstore-8080
             namespace: gloo-system
@@ -601,7 +601,7 @@ spec:
               functionName: findPetById
               parameters:
                 headers:
-                  :path: /pets/{id}
+                  :path: /pets/\{id\}
           upstream:
             name: default-petstore-8080
             namespace: gloo-system
@@ -636,7 +636,7 @@ status:
 
 ```yaml
 - matchers:
-      - regex: /add-pet/[1-9]/[a-z]{2,10}/(pending|available)      
+      - regex: /add-pet/[1-9]/[a-z]\{2,10\}/(pending|available)      
       routeAction:
         single:
           destinationSpec:
@@ -644,7 +644,7 @@ status:
               functionName: addPet
               parameters:
                 headers:
-                  :path: /add-pet/{id}/{name}/{tag}
+                  :path: /add-pet/\{id\}/\{name\}/\{tag\}
           upstream:
             name: default-petstore-8080
             namespace: gloo-system
@@ -678,7 +678,7 @@ Matcher陈了上面说过的对Path进行匹配外,还可以对Header, Query Par
             - name: os_type
             - name: type
               regex: true
-              value: "[a-z]{1}"
+              value: "[a-z]\{1\}"
             - name: Istest
               invertMatch: true
             - name: Istrace
@@ -700,7 +700,7 @@ version=v1 `and` 必须有os_type字段 `and` type在小写的a-z之间`and` 没
       - name: location
       - name: userno
         regex: true
-        value: "a[a-z]{9}"
+        value: "a[a-z]\{9\}"
       prefix: /
 ```
 
@@ -726,8 +726,8 @@ Transformations属性定义在Virtual Services, 你可以在它的**VritualHosts
 ```yaml
 transformations:
   clearRouteCache: bool
-  requestTransformation: {}
-  responseTransformation: {}
+  requestTransformation: \{\}
+  responseTransformation: \{\}
 ```
 
 - **clearRouterCache**: 有时transformation会改变路由比如改了path后不应该再到这个路由条件下)后,如果设置为true,则在改变后会重新(根据新的path)找路由,如果是false,则还是走转换前的路由.默认为false.
@@ -739,14 +739,14 @@ transformations:
 
 ```yaml
 transformationTemplate:
-  parseBodyBehavior: {}
+  parseBodyBehavior: \{\}
   ignoreErrorOnParse: bool
-  extractors:  {}
-  headers: {}
+  extractors:  \{\}
+  headers: \{\}
   # Only one of body, passthrough, and mergeExtractorsToBody can be specified
-  body: {} 
-  passthrough: {}
-  mergeExtractorsToBody: {}
+  body: \{\} 
+  passthrough: \{\}
+  mergeExtractorsToBody: \{\}
   dynamicMetadataValues: []
   advancedTemplates: bool
 ```
@@ -762,12 +762,12 @@ Templates是Transformation的核心,本质就是**利用上面这几个关键字
   ```yaml
   extractors:
     myFooHeader:  #这个变是变量名
-      header: 'foo' # 这个就是从头里面取值,然后放到变量中,还可以写在body: {},这样就是取body的内容
+      header: 'foo' # 这个就是从头里面取值,然后放到变量中,还可以写在body: \{\},这样就是取body的内容
   ```
 
   - header 提取header里面为`foo`的值.
   - 你也可以在Extractors中使用正则来提取.
-  - 两种方式取到这值:默认下`{{myFooHeader}}`, 如果设置中`advancedTemplates`是true,则需要像函数一样调用它: `{{ extraction(myFooHeader) }}`
+  - 两种方式取到这值:默认下`\{\{myFooHeader\}\}`, 如果设置中`advancedTemplates`是true,则需要像函数一样调用它: `\{\{ extraction(myFooHeader) \}\}`
 
 - **headers** : 注意这里的headers不是extractors中的header, extractors是取值给变量,这里是把变量转换到请求/应答中的头中.
 
@@ -775,12 +775,12 @@ Templates是Transformation的核心,本质就是**利用上面这几个关键字
   transformationTemplate:
     headers:
       bar:
-        text: '{{ extration("myFooHeader") }}'
+        text: '\{\{ extration("myFooHeader") \}\}'
   ```
 
   流程是提取的值放到`myFooHeader`然后再把`myFooHeader`的值放到头中为`bar`的字段中.
 
-  这种简单的转换你也不使用中间变量达到一样的效果,  直接使用`{{ header("foo") }}`, 替换text内容. header("foo")函数是一个和extraction一样的内置函数,等下面会列出所有的内置函数.
+  这种简单的转换你也不使用中间变量达到一样的效果,  直接使用`\{\{ header("foo") \}\}`, 替换text内容. header("foo")函数是一个和extraction一样的内置函数,等下面会列出所有的内置函数.
 
 - **body**: 注意这里的body不是extractors中的body, extractors是取值给变量,这里是把变量转换到请求/应答中的body中.
 
@@ -788,7 +788,7 @@ Templates是Transformation的核心,本质就是**利用上面这几个关键字
   transformationTemplate:
     # ...
     body: 
-      text: '{% if header(":status") == "404" %}{ "error": "Not found!" }{% else %}{{ body() }}{% endif %}'
+      text: '\{\% if header(":status") == "404" \%\}\{ "error": "Not found!" \}\{\% else \%\}\{\{ body() \}\}\{\% endif \%\}'
     # ...
   ```
 
@@ -800,7 +800,7 @@ Templates是Transformation的核心,本质就是**利用上面这几个关键字
 
   ```yaml
   transformationTemplate:
-    mergeExtractorsToBody: {}
+    mergeExtractorsToBody: \{\}
     extractors:
     path:
       header: ':path'
@@ -814,12 +814,12 @@ Templates是Transformation的核心,本质就是**利用上面这几个关键字
   转换后的body为:
 
   ```json
-  {
+  \{
     "path": "/the/request/path",
-    "host": {
+    "host": \{
       "name": "value of the 'host' header"
-    }
-  }
+    \}
+  \}
   ```
 
 - **dynamicMetadataValues**: 动态设置metadata值.因为内置的这些函数和extractor值只能在TransformationTemplate中使用,有时我们需要其它的地方使用,这时间就要需要把在template中得到值赋值到动态的metadata中, 动态的metadata是可以全局使用的.比如:
@@ -834,12 +834,12 @@ Templates是Transformation的核心,本质就是**利用上面这几个关键字
               - key: 'pod_name'
                 value:
                   # The POD_NAME env is set by default on the gateway-proxy pods
-                  text: '{{ env("POD_NAME") }}'            
+                  text: '\{\{ env("POD_NAME") \}\}'            
               # Set a dynamic metadata entry using an request body attribute
               - key: 'endpoint_url'
                 value:
                   # The "url" attribute in the JSON response body
-                  text: '{{ url }}'
+                  text: '\{\{ url \}\}'
   ```
 
   比如我们在设置全局log里需要使用到这个pod_name和endpoint_url时,就可以配置为:
@@ -857,27 +857,27 @@ Templates是Transformation的核心,本质就是**利用上面这几个关键字
   spec:
     bindAddress: '::'
     bindPort: 8080
-    httpGateway: {}
+    httpGateway: \{\}
     options:
       accessLoggingService:
         accessLog:
         - fileSink:
             jsonFormat:
-              httpMethod: '%REQ(:METHOD)%'
-              pod_name: '%DYNAMIC_METADATA(io.solo.transformation:pod_name)%'
-              endpoint_url: '%DYNAMIC_METADATA(io.solo.transformation:endpoint_url)%'
+              httpMethod: '\%REQ(:METHOD)\%'
+              pod_name: '\%DYNAMIC_METADATA(io.solo.transformation:pod_name)\%'
+              endpoint_url: '\%DYNAMIC_METADATA(io.solo.transformation:endpoint_url)\%'
             path: /dev/stdout
   ```
 
   这样看到的log就可以是:
 
   ```bash
-  kubectl logs -n gloo-system deployment/gateway-proxy | grep '^{' | jq
-  {  
+  kubectl logs -n gloo-system deployment/gateway-proxy | grep '^\{' | jq
+  \{  
     "pod_name": "\"gateway-proxy-f46b58f89-5fkmd\"",
     "httpMethod": "GET",
     "endpoint_url": "\"https://postman-echo.com/get\""
-  }
+  \}
   ```
 
 - 内置函数
@@ -902,7 +902,7 @@ options:
       transformationTemplate:
         headers:              
           ":status":
-           text: '{% if default(ret, 0) != 0 %}400{% else %}{{ header(":status") }}{% endif %}'
+           text: '\{\% if default(ret, 0) != 0 \%\}400\{\% else \%\}\{\{ header(":status") \}\}\{\% endif \%\}'
 ```
 
 这里可以直接使用`ret`变量,是因为前面默认是以json解析body,然后inja template支持这样的语法取json body.
@@ -929,9 +929,9 @@ options:
             subgroup: 2            
         headers:
           foo:
-            text: '{{ foo }}'
+            text: '\{\{ foo \}\}'
           bar:
-            text: '{{ bar }}'
+            text: '\{\{ bar \}\}'
 ```
 
 header中使用`:path`是因为envoy使用的是http2的协议来做transformat,所以如果你使用的是http1.1的话,就需要使用 `:path`. http2的path就是header中的`:path`字段.
@@ -952,9 +952,9 @@ options:
         headers:
           # By updating the :path pseudo-header, we update the request URI
           ":path":
-            text: '{% if header("foo") == "bar" %}/post{% else %}{{ header(":path") }}{% endif %}'          
+            text: '\{\% if header("foo") == "bar" \%\}/post\{\% else \%\}\{\{ header(":path") \}\}\{\% endif \%\}'          
           ":method":
-            text: '{% if header("foo") == "bar" %}POST{% else %}{{ header(":method") }}{% endif %}'
+            text: '\{\% if header("foo") == "bar" \%\}POST\{\% else \%\}\{\{ header(":method") \}\}\{\% endif \%\}'
 ```
 
 这个比较简单,都没有用到extractor.效果相当于: 如果header有字段`foo=bar`则无把path改成`/post`.并把http方法也改成`POST`.
