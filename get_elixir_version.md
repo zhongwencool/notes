@@ -4,7 +4,7 @@ subtitle:
 description: elixir,erlang,version
 date: 2021-01-25
 layout: default
-bg_url: "assets/images/wechat.jpg"
+bg_url: "assets/images/hello-elixir.jpg"
 category: 技术
 ---
 
