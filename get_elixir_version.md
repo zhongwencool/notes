@@ -7,9 +7,8 @@ layout: default
 bg_url: "assets/images/wechat.jpg"
 category: 技术
 ---
-### E1.获取Elixir/Erlang版本信息
 
-#### 获取Elixir版本
+### 获取Elixir版本
 
 直接在shel中打开`iex` (interactive shell)，就可以查到具体的版本信息：
 
@@ -39,7 +38,7 @@ iex(1)> System.version
 "1.9.0"
 ```
 
-#### 获取Erlang版本
+### 获取Erlang版本
 
 Erlang无法使用`erl --version`命令，只能通过命令行选项[eval与noshell](http://erlang.org/doc/man/erl.html)参数求值来实现。
 
