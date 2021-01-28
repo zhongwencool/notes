@@ -13,7 +13,7 @@ category: 技术
 
 在shell里面输出复杂的多行表达时，经常由于少输入一个引号，一直无法退出当前的表达式求值，也没有办法终止它，以前只能通过两次`Ctrl+C`结束这个shell，然后再开启一个新的shell，但是这样，你前的的变量和历史记录就要再来一次了，你还可以通过一个特殊的break-trigger`#iex:break`,就可以跳出当前表达式，返回正常的状态。
 
-![E2_1](/Users/zhongwen/Downloads/E2_1.png)
+![E2_1](./assets/images/E2_1.png)
 
 ### 开启历史记录
 
@@ -29,7 +29,7 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 
 ### 绑定以前表达式的结果
 
-<img src="/Users/zhongwen/Downloads/E2_2.png" alt="E2_2" style="zoom:80%;" />
+<img src="./assets/images/E2_2.png" alt="E2_2" style="zoom:80%;" />
 
 直接使用`v/1`+边上的序号就可以得到对应序号的表达式结果，或都使用负数，得到前多少个表达式的结果。
 
@@ -41,4 +41,4 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 
 可以使用charlist inspect一下。
 
-<img src="/Users/zhongwen/Downloads/E2_3.png" alt="E2_3" style="zoom:80%;" />
+<img src="./assets/images/E2_3.png" alt="E2_3" style="zoom:80%;" />

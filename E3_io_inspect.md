@@ -13,11 +13,11 @@ category: 技术
 
 它可以打印任何的数据类型，并且可以定制protocol来打印自定义的数据。
 
-<img src="/Users/zhongwen/Downloads/E3_0.png" alt="E3_0" style="zoom:67%;" />
+<img src="./assets/images/E3_0.png" alt="E3_0" style="zoom:67%;" />
 
 对比[IO.puts](https://hexdocs.pm/elixir/IO.html#puts/2)，它能直接打印的数据类型就少得多了，比如：基本的数据类型，原子，字符串，`IOData`。`IO.puts`返回值为`ok`。
 
-<img src="/Users/zhongwen/Downloads/E3_2.png" alt="E3_2" style="zoom:67%;" />
+<img src="./assets/images/E3_2.png" alt="E3_2" style="zoom:67%;" />
 
 所以`IO.inspect`在**调试时能随意打印任何数据结构是多么的棒**!
 
@@ -25,7 +25,7 @@ category: 技术
 
 最棒的是此函数可以保持返回值就是输入，这可以在代码的任何地方加入它，且不影响原有代码逻辑。比如：
 
-<img src="/Users/zhongwen/Downloads/E3_3.png" alt="E3_3" style="zoom:67%;" />
+<img src="./assets/images/E3_3.png" alt="E3_3" style="zoom:67%;" />
 
 1. IO.inspect 可以加入`label`选项，他会直接把`label`对应内容打印在最前面。
 2. 使用[String.split/3](https://hexdocs.pm/elixir/String.html#split/3)正则分割字符串。
@@ -34,13 +34,13 @@ category: 技术
 
 限制打印的长度，允许输入0-N，或者`:infinity`。
 
-<img src="/Users/zhongwen/Downloads/E3_5.png" alt="E3_5" style="zoom:67%;" />
+<img src="./assets/images/E3_5.png" alt="E3_5" style="zoom:67%;" />
 
 ### Kernel.inspect/2
 
 还有一个与`IO.inspect`非常相似的函数，它就是`Kernel.inspect/2`， 这个函数不会把数据打到控制台上，它只是把参数stringify化，比如：
 
-<img src="/Users/zhongwen/Downloads/E3_4.png" alt="E3_4" style="zoom:67%;" />
+<img src="./assets/images/E3_4.png" alt="E3_4" style="zoom:67%;" />
 
 ```elixir
 iex> inspect(:foo)
