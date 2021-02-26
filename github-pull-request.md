@@ -254,4 +254,5 @@ $ git push origin master
 [鞍山侯国玉](https://github.com/suyunzzz)、
 [jiejierong](https://github.com/jiejierong)、
 [tinywell](https://github.com/tinywell)、
-[13ruceYu](https://github.com/13ruceYu)
+[13ruceYu](https://github.com/13ruceYu)、
+[硅硅键](https://github.com/silicon-bond)
