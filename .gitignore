@@ -1,4 +1,5 @@
 .sass-cache
+git_push.sh
 _site
 .DS_Store
 check.sh
