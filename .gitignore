@@ -3,3 +3,4 @@ git_push.sh
 _site
 .DS_Store
 check.sh
+logseq/bak/*
