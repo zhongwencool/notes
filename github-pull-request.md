@@ -15,4 +15,5 @@
 [doxn](https://github.com/doxn)
 [tlc](https://github.com/tulingcheng86)
 [ymj4023](https://github.com/ymj4023)
+[iMagist486](https://github.com/iMagist486)
 
