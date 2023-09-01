@@ -15,5 +15,6 @@
 [doxn](https://github.com/doxn)
 [tlc](https://github.com/tulingcheng86)
 [ymj4023](https://github.com/ymj4023)
+[iMagist486](https://github.com/iMagist486)
 [8871755](https://github.com/8871755)
 [chinazhangyujia1](https://github.com/chinazhangyujia1)
