@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunknotes=self.webpackChunknotes||[]).push([[535],{5641:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"\u5f00\u542f GitHub PR \u63a2\u7d22\u4e4b\u65c5","permalink":"/en/blog/githhub-pull-request-intro"}]}')}}]);

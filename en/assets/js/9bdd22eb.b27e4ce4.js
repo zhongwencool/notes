@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunknotes=self.webpackChunknotes||[]).push([[253],{5803:e=>{e.exports=JSON.parse('[{"label":"GitHub","permalink":"/en/blog/tags/git-hub","count":1}]')}}]);

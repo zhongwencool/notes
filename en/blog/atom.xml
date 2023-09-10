@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://zhongwencool.github.io/en/blog</id>
+    <id>https://zhongwencool.github.io/notes/en/blog</id>
     <title>「玩」 Blog</title>
     <updated>2018-09-29T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://zhongwencool.github.io/en/blog"/>
+    <link rel="alternate" href="https://zhongwencool.github.io/notes/en/blog"/>
     <subtitle>「玩」 Blog</subtitle>
-    <icon>https://zhongwencool.github.io/en/img/favicon.ico</icon>
+    <icon>https://zhongwencool.github.io/notes/en/img/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[开启 GitHub PR 探索之旅]]></title>
-        <id>https://zhongwencool.github.io/en/blog/githhub-pull-request-intro</id>
-        <link href="https://zhongwencool.github.io/en/blog/githhub-pull-request-intro"/>
+        <id>https://zhongwencool.github.io/notes/en/blog/githhub-pull-request-intro</id>
+        <link href="https://zhongwencool.github.io/notes/en/blog/githhub-pull-request-intro"/>
         <updated>2018-09-29T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[🎉 欢迎提交自己的第一个 GitHub PR，为自己乾杯🍻。]]></summary>
         <content type="html"><![CDATA[<p><strong> 🎉 欢迎提交自己的第一个 GitHub PR，为自己乾杯🍻。</strong></p><p>提交格式说明：</p><div class="language-html codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-html codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">[</span><span class="token tag punctuation" style="color:#393A34">&lt;</span><span class="token tag" style="color:#00009f">img</span><span class="token tag" style="color:#00009f"> </span><span class="token tag attr-name" style="color:#00a4db">src</span><span class="token tag attr-value punctuation attr-equals" style="color:#393A34">=</span><span class="token tag attr-value punctuation" style="color:#393A34">"</span><span class="token tag attr-value" style="color:#e3116c">https://github.com/{GitHub注册名}.png</span><span class="token tag attr-value punctuation" style="color:#393A34">"</span><span class="token tag" style="color:#00009f"> </span><span class="token tag attr-name" style="color:#00a4db">width</span><span class="token tag attr-value punctuation attr-equals" style="color:#393A34">=</span><span class="token tag attr-value punctuation" style="color:#393A34">"</span><span class="token tag attr-value" style="color:#e3116c">80px;</span><span class="token tag attr-value punctuation" style="color:#393A34">"</span><span class="token tag punctuation" style="color:#393A34">/&gt;</span><span class="token tag punctuation" style="color:#393A34">&lt;</span><span class="token tag" style="color:#00009f">br</span><span class="token tag" style="color:#00009f"> </span><span class="token tag punctuation" style="color:#393A34">/&gt;</span><span class="token plain">拉风外号](https://github.com/{GitHub注册名}) </span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><ul><li><p>本表使用 Markdown 表格语法。每行 6 列，单元格格式居中。</p></li><li><p>单元格内使用 HTML 图像标签。在 HTML 中，图像由 <code>&lt;img&gt;</code> 标签定义。
