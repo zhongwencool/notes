@@ -6,7 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: '「玩」',
+  title: ' 📝',
   tagline: '不带目的地在宽广的世界闯荡，找到什么让自己快乐',
   favicon: 'img/favicon.ico',
 
@@ -14,12 +14,13 @@ const config = {
   url: 'https://zhongwencool.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/notes/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'zhongwencool', // Usually your GitHub org/user name.
   projectName: 'notes', // Usually your repo name.
+  trailingSlash: false,
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -62,7 +63,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/zhongwencool.jpg',
       navbar: {
         title: '🏡主页',
         logo: {
