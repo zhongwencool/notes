@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhongwencool.github.io/notes/en/blog</id>
-    <title>「玩」 Blog</title>
+    <title> 📝 Blog</title>
     <updated>2018-09-29T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhongwencool.github.io/notes/en/blog"/>
-    <subtitle>「玩」 Blog</subtitle>
+    <subtitle> 📝 Blog</subtitle>
     <icon>https://zhongwencool.github.io/notes/en/img/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[开启 GitHub PR 探索之旅]]></title>
